@@ -2,26 +2,57 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+        --background: #f2e8cf;
+        --foreground: #1a1a1a;
+        --card: #d9ead9;
+        --card-foreground: #2d2d2d;
+        --popover: #ffffff;
+        --popover-foreground: #0a0a0a;
+        --primary: #a7c957;
+        --primary-foreground: #f4ecec;
+        --secondary: #bc4749;
+        --secondary-foreground: #f4ecec;
+        --accent: #9cd19c;
+        --accent-foreground: #1a1a1a;
+        --input: #9d8189;
+        --input-selected: #f4acb7;
+    }
+
+    .dark {
+        --background: #1b180f;
+        --foreground: #f5f5f5;
+        --card: #28242b;
+        --card-foreground: #f2dddd;
+        --popover: #0a0a0a;
+        --popover-foreground: #f5f5f5;
+        --primary: #386641;
+        --primary-foreground: #141414;
+        --secondary: #bc4749;
+        --secondary-foreground: #141414;
+        --accent: #6a3096;
+        --accent-foreground: #f5f5f5;
+        --input: #ffe5d9;
+        --input-selected: #ffcad4;
+    }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
