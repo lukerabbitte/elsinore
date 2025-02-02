@@ -1,3 +1,5 @@
+import HighlightCardHolder from "@/components/HighlightCardHolder";
+
 const Home = async() => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/highlights`);
 
@@ -10,13 +12,7 @@ const Home = async() => {
 
     return (
         <div className="flex flex-col gap-4">
-            <h1 className="text-2xl">Highlights</h1>
-            {highlights?.map((highlight) => (
-                <div key={highlight.id} className="p-4 border-2 rounded-xl">
-                    <h1 className="font-black">{highlight.title}</h1>
-                    <p>{highlight.content}</p>
-                </div>
-            ))}
+            <HighlightCardHolder highlights={highlights} />
         </div>
     );
 }
