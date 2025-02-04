@@ -1,20 +1,16 @@
 import HighlightCardHolder from "@/components/HighlightCardHolder";
+import { getAllHighlights } from "@/lib/highlights";
 
-const Home = async() => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/highlights`);
-
-    if (!res.ok) {
-        console.error("Error fetching highlights", res.statusText);
-        return <div>Error loading highlights</div>;
-    }
-
-    const highlights = await res.json();
+const Home = async () => {
+    const highlights = await getAllHighlights();
 
     return (
-        <div className="flex flex-col gap-4">
-            <HighlightCardHolder highlights={highlights} />
+        <div className="flex flex-row justify-center items-center">
+            <div className="w-full md:max-w-md h-screen-minus-padding-and-navbar">
+                <HighlightCardHolder highlights={highlights} />
+            </div>
         </div>
     );
-}
+};
 
 export default Home;

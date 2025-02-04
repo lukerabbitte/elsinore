@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }
 
 @layer base {
-  :root {
+    :root {
         --background: #f2e8cf;
         --foreground: #1a1a1a;
         --card: #d9ead9;
@@ -28,6 +28,8 @@ body {
         --accent-foreground: #1a1a1a;
         --input: #9d8189;
         --input-selected: #f4acb7;
+
+        --vh: 1vh;
     }
 
     .dark {
@@ -45,14 +47,16 @@ body {
         --accent-foreground: #f5f5f5;
         --input: #ffe5d9;
         --input-selected: #ffcad4;
+
+        --vh: 1vh;
     }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
 }

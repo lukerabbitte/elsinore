@@ -13,14 +13,12 @@ const Navbar = () => {
     };
 
     return (
-        <div className="flex flex-row justify-end p-4 bg-primary">
-            <div className="px-4">
-                <Switch
-                    checked={theme === "dark"}
-                    onCheckedChange={toggleTheme}
-                    className={"transition-colors duration-500"}
-                />
-            </div>
+        <div className="flex flex-row justify-end items-center h-12 px-4 bg-primary">
+            <Switch
+                checked={theme === "dark"}
+                onCheckedChange={toggleTheme}
+                className={"transition-colors duration-500"}
+            />
         </div>
     );
 };

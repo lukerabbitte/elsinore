@@ -53,6 +53,9 @@ module.exports = {
                 xs: "480px",
                 "3xl": "1920px",
             },
+            height: {
+                "screen-minus-padding-and-navbar": "calc(100vh - 2rem - 3rem)",
+            },
         },
     },
     plugins: [require("tailwindcss-animate")],

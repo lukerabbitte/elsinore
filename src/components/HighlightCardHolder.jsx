@@ -1,8 +1,8 @@
 import React from "react";
-import Link from "next/link";
-import HighlightCard from "@/components/HighlightCard";
+import EmblaCarousel from "@/components/embla/EmblaCarousel";
 
 const HighlightCardHolder = ({ highlights }) => {
+
     return (
         <div>
             {!highlights ? (
@@ -10,12 +10,8 @@ const HighlightCardHolder = ({ highlights }) => {
                     <p className="text-center text-lg">Loading...</p>
                 </div>
             ) : (
-                <div className="grid gap-4 grid-cols-1">
-                    {highlights.map((highlight) => (
-                        <Link key={highlight.slug} href={`/highlights/${highlight.slug}`}>
-                            <HighlightCard highlight={highlight} />
-                        </Link>
-                    ))}
+                <div>
+                    <EmblaCarousel options={{ axis: "y", duration: 20 }} highlights={highlights} />
                 </div>
             )}
         </div>
