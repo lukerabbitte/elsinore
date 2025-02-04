@@ -1,15 +1,86 @@
-import { createHighlight, updateHighlight, deleteHighlight, getAllHighlights } from "@/lib/highlights";
+import { createHighlight, getAllHighlights, getHighlightBySlug } from "@/lib/highlights";
+import { generateAudio } from "@/lib/audioGeneration";
+import { saveAudio } from "@/lib/audioStorage";
+import { generateSlug } from "@/lib/utils";
 
-export async function POST(req) {
-    const { userId, excerptId, content } = await req.json();
-
+export async function POST(request) {
     try {
-        // Create a new highlight
-        const newHighlight = await createHighlight(userId, excerptId, content);
+        const { userId, title, content, full_text_url, wikipedia_url, voiceId } =
+            await request.json();
+
+        // Validate mandatory inputs
+        if (!userId || !title || !content || !voiceId) {
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    error: "Missing required fields: userId, title, content, or voiceId",
+                }),
+                { status: 400 }
+            );
+        }
+
+        // Generate the slug
+        const slug = generateSlug(title);
+
+        // Generate the audio blob
+        let audioBlob;
+        try {
+            audioBlob = await generateAudio({ text: content, voiceId });
+
+            // Validate the audio blob
+            if (!audioBlob || audioBlob.size === 0) {
+                throw new Error("Generated audio is empty or invalid");
+            }
+        } catch (audioError) {
+            console.error("Audio generation failed:", audioError);
+            return Response.json(
+                {
+                    success: false,
+                    error: `Audio generation failed: ${audioError.message}`,
+                    step: "generation",
+                },
+                { status: 500 }
+            );
+        }
+
+        // Only proceed to storage if we have valid audio
+        let mp3_url;
+        try {
+            mp3_url = await saveAudio({ highlightFilename: slug, audioBlob });
+        } catch (storageError) {
+            console.error("Storage save failed:", storageError);
+            return Response.json(
+                {
+                    success: false,
+                    error: `Storage save failed: ${storageError.message}`,
+                    step: "storage",
+                },
+                { status: 500 }
+            );
+        }
+
+        // Create the highlight
+        const highlightData = {
+            user_id: userId,
+            title,
+            content,
+            full_text_url,
+            wikipedia_url,
+            mp3_url,
+            slug,
+        };
+
+        const newHighlight = await createHighlight(highlightData);
 
         return new Response(JSON.stringify(newHighlight), { status: 201 });
     } catch (error) {
-        return new Response("Error creating highlight", { status: 500 });
+        return new Response(
+            JSON.stringify({
+                success: false,
+                error: "Error creating highlight",
+            }),
+            { status: 500 }
+        );
     }
 }
 
@@ -39,21 +110,22 @@ export async function DELETE(req) {
     }
 }
 
-// GET request to fetch a highlight by ID or if no ID given, all highlights
+// GET request to fetch a highlight by slug or if no slug given, all highlights
 export async function GET(req) {
     const { searchParams } = new URL(req.url);
-    const highlightId = searchParams.get("id");
+    const highlightSlug = searchParams.get("slug");
 
-    if (highlightId) {
+    if (highlightSlug) {
         try {
-            const highlight = await getHighlightById(highlightId);
+            const highlight = await getHighlightBySlug(highlightSlug);
             if (!highlight) {
                 return new Response("Highlight not found", { status: 404 });
             }
 
             return new Response(JSON.stringify(highlight), { status: 200 });
         } catch (error) {
-            return new Response("Error fetching highlight by ID", { status: 500 });
+            console.error("Error fetching highlight by slug:", error);
+            return new Response("Error fetching highlight by slug", { status: 500 });
         }
     } else {
         try {
@@ -61,6 +133,7 @@ export async function GET(req) {
 
             return new Response(JSON.stringify(highlights), { status: 200 });
         } catch (error) {
+            console.error("Error fetching highlights:", error);
             return new Response("Error fetching highlights", { status: 500 });
         }
     }

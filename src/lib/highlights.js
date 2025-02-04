@@ -1,14 +1,28 @@
 import { supabase } from "@/lib/supabase";
 
-export const createHighlight = async (userId, excerptId, content) => {
+export const createHighlight = async ({
+    user_id,
+    title,
+    content,
+    full_text_url,
+    wikipedia_url,
+    mp3_url,
+    slug,
+    book_id,
+}) => {
     try {
         const { data, error } = await supabase
             .from("highlight")
             .insert([
                 {
-                    user_id: userId,
-                    excerpt_id: excerptId,
-                    content: content,
+                    user_id,
+                    title,
+                    content,
+                    full_text_url,
+                    wikipedia_url,
+                    mp3_url,
+                    slug,
+                    book_id,
                 },
             ])
             .single();
@@ -22,7 +36,7 @@ export const createHighlight = async (userId, excerptId, content) => {
     }
 };
 
-export const updateHighlight = async (highlightId, content) => {
+export const updateHighlightContent = async (highlightId, content) => {
     try {
         const { data, error } = await supabase
             .from("highlight")
@@ -34,7 +48,24 @@ export const updateHighlight = async (highlightId, content) => {
 
         return data;
     } catch (error) {
-        console.error("Error updating highlight:", error);
+        console.error("Error updating highlight content:", error);
+        throw error;
+    }
+};
+
+export const updateHighlightMP3 = async (highlightId, mp3_url) => {
+    try {
+        const { data, error } = await supabase
+            .from("highlight")
+            .update({ mp3_url })
+            .eq("id", highlightId)
+            .single();
+
+        if (error) throw error;
+
+        return data;
+    } catch (error) {
+        console.error("Error updating highlight MP3 url:", error);
         throw error;
     }
 };
@@ -67,19 +98,19 @@ export const getAllHighlights = async () => {
 };
 
 // Function to fetch a highlight by ID
-export const getHighlightById = async (highlightId) => {
+export const getHighlightBySlug = async (highlightSlug) => {
     try {
         const { data, error } = await supabase
-            .from('highlights')
-            .select('*')
-            .eq('id', highlightId)
-            .single()
+            .from("highlight")
+            .select("*")
+            .eq("slug", highlightSlug)
+            .single();
 
-        if (error) throw error
+        if (error) throw error;
 
-        return data
+        return data;
     } catch (error) {
-        console.error('Error fetching highlight by ID:', error)
-        throw error
+        console.error("Error fetching highlight by slug:", error);
+        throw error;
     }
-}
+};

@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 
-export const saveAudio = async ({ highlightId, audioBlob }) => {
-    const fileName = `highlights/${highlightId}.mp3`;
+export const saveAudio = async ({ highlightFilename, audioBlob }) => {
+    const fileName = `highlights/${highlightFilename}.mp3`;
 
     const { data, error } = await supabase.storage.from("audio-files").upload(fileName, audioBlob, {
         upsert: true,
@@ -11,8 +11,8 @@ export const saveAudio = async ({ highlightId, audioBlob }) => {
     return data.path;
 };
 
-export const getAudioByHighlightId = (highlightId) => {
-    const filePath = `highlights/${highlightId}.mp3`;
+export const getAudioByHighlightFilename = (highlightFilename) => {
+    const filePath = `highlights/${highlightFilename}.mp3`;
 
     const {
         data: { publicUrl },
@@ -48,10 +48,10 @@ export const getAllHighlightAudio = async ({
             return null;
         }
 
-        const highlightId = file.name.replace(".mp3", "");
+        const highlightFilename = file.name.replace(".mp3", "");
 
         return {
-            highlightId,
+            highlightFilename,
             url: publicUrl,
             created_at: file.created_at,
             last_modified: file.last_modified,

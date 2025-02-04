@@ -1,16 +1,18 @@
+/* This route is useful for managing audio alone, without worrying about the highlights to which they are related */
+
 import { generateAudio } from "@/lib/audioGeneration";
-import { saveAudio, getAudioByHighlightId, getAllHighlightAudio } from "@/lib/audioStorage";
+import { saveAudio, getAudioByHighlightFilename, getAllHighlightAudio } from "@/lib/audioStorage";
 
 export async function POST(request) {
     try {
-        const { highlightId, text, voiceId } = await request.json();
+        const { highlightFilename, text, voiceId } = await request.json();
 
         // Validate inputs
-        if (!highlightId || !text || !voiceId) {
+        if (!highlightFilename || !text || !voiceId) {
             return Response.json(
                 {
                     success: false,
-                    error: "Missing required fields: highlightId, text, or voiceId",
+                    error: "Missing required fields: highlightFilename, text, or voiceId",
                 },
                 { status: 400 }
             );
@@ -39,7 +41,7 @@ export async function POST(request) {
 
         // Only proceed to storage if we have valid audio
         try {
-            const url = await saveAudio({ highlightId, audioBlob });
+            const url = await saveAudio({ highlightFilename, audioBlob });
             return Response.json({
                 success: true,
                 url,
@@ -71,11 +73,11 @@ export async function POST(request) {
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
-        const highlightId = searchParams.get("highlightId");
+        const highlightFilename = searchParams.get("highlightFilename");
 
-        if (highlightId) {
+        if (highlightFilename) {
             // Get specific highlight audio
-            const url = await getAudioByHighlightId(highlightId);
+            const url = await getAudioByHighlightFilename(highlightFilename);
             return Response.json({
                 success: true,
                 url,
