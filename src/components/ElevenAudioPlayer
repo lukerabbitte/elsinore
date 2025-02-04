@@ -1,0 +1,23 @@
+import { ElevenLabsClient, play } from "elevenlabs";
+import React from "react";
+
+const ElevenAudioPlayer = ({ content }) => {
+    const client = new ElevenLabsClient();
+    const audio = await client.textToSpeech.convert("JBFqnCBsd6RMkjVDRZzb", {
+        text: "The first move is what sets everything in motion.",
+        model_id: "eleven_multilingual_v2",
+        output_format: "mp3_44100_128",
+    });
+
+    await play(audio);
+
+    const handleClick;
+
+    return (
+        <div className="p-4 border-2">
+            <p>Hey</p>
+        </div>
+    );
+};
+
+export default ElevenAudioPlayer;

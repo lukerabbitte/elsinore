@@ -1,5 +1,4 @@
-// app/api/highlights/route.js
-import { createHighlight, updateHighlight, deleteHighlight, getAllHighlights } from "./db";
+import { createHighlight, updateHighlight, deleteHighlight, getAllHighlights } from "@/lib/highlights";
 
 export async function POST(req) {
     const { userId, excerptId, content } = await req.json();

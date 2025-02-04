@@ -1,4 +1,3 @@
-// app/api/highlights/db.js
 import { supabase } from "@/lib/supabase";
 
 export const createHighlight = async (userId, excerptId, content) => {
