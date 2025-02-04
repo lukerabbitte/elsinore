@@ -83,10 +83,16 @@ export const deleteHighlight = async (highlightId) => {
     }
 };
 
-// Function to fetch all highlights
+// Function to fetch all highlights with user profile information from join
 export const getAllHighlights = async () => {
     try {
-        const { data, error } = await supabase.from("highlight").select("*");
+        const { data, error } = await supabase.from("highlight").select(`
+                *,
+                profile:profile (
+                    avatar_image,
+                    display_name
+                )
+            `);
 
         if (error) throw error;
 

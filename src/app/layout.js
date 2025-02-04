@@ -18,11 +18,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body
-                className={`min-h-screen flex flex-col rosario.className`}
-            >
+            <body className={`min-h-screen flex flex-col rosario.className`}>
                 <NextThemesProvider attribute="class" defaultTheme="system">
-                    <Navbar />
+                    <div className="mt-4 mx-4 sm:mt-0">
+                        <Navbar />
+                    </div>
                     <main className="flex-grow p-4">{children}</main>
                 </NextThemesProvider>
             </body>

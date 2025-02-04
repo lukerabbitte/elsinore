@@ -54,7 +54,7 @@ module.exports = {
                 "3xl": "1920px",
             },
             height: {
-                "screen-minus-padding-and-navbar": "calc(100vh - 2rem - 3rem)",
+                "screen-minus-padding-and-navbar": "calc(100vh - 3rem - 3rem)",
             },
         },
     },

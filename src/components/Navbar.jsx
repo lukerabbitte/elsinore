@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import React from "react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
 
@@ -13,7 +12,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className="flex flex-row justify-end items-center h-12 px-4 bg-primary">
+        <div className="flex flex-row justify-end items-center h-12 px-4">
             <Switch
                 checked={theme === "dark"}
                 onCheckedChange={toggleTheme}
