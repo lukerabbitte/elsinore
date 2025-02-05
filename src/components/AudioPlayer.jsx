@@ -52,7 +52,7 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 flex flex-col items-center"
+            className="fixed bottom-0 left-0 right-0 bg-secondary text-foreground flex flex-col items-center"
         >
             <audio
                 ref={audioRef}
