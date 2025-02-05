@@ -99,7 +99,7 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
             </div>
 
             <div className="w-full flex flex-col gap-2">
-                <Slider value={[currentTime]} onValueChange={handleSeek} min={0} max={100} />
+                <Slider value={[currentTime]} onValueChange={handleSeek} min={0} max={duration} />
                 <div className="flex justify-between w-full text-sm">
                     <span>{new Date(currentTime * 1000).toISOString().substr(11, 8)}</span>
                     <span>{new Date(duration * 1000).toISOString().substr(11, 8)}</span>
