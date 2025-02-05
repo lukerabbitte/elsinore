@@ -10,7 +10,7 @@ const UserAvatar = ({ avatarImage, displayName }) => {
                     <div className="w-full h-full rounded-full backdrop-blur-xl bg-slate-500/30"></div>
                 </AvatarFallback>
             </Avatar>
-            <span className="font-medium lg:font-bold text-right text-balance">{displayName}</span>
+            <span className="lg:font-medium text-right text-balance">{displayName}</span>
         </div>
     );
 };
