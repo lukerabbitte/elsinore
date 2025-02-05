@@ -14,19 +14,19 @@ body {
 
 @layer base {
     :root {
-        --background: #f2e8cf;
+        --background: #e8ecf7;
         --foreground: #1a1a1a;
         --card: #d9ead9;
         --card-foreground: #2d2d2d;
         --popover: #ffffff;
         --popover-foreground: #0a0a0a;
-        --primary: #cbe2cb;
+        --primary: #20357c;
         --primary-foreground: #1a1a1a;
-        --secondary: #3e87d6;
+        --secondary: #bcbcbc;
         --secondary-foreground: #e5e9f3;
-        --accent: #ccd8cc;
-        --accent-foreground: #1a1a1a;
-        --input: #20357c;
+        --accent: #41569d;
+        --accent-foreground: #e8ecf7;
+        --input: #41569d;
         --input-selected: #20357c;
 
         --gradient-start-light: #dce6ff;
@@ -46,20 +46,20 @@ body {
     }
 
     .dark {
-        --background: #1b180f;
+        --background: #13131b;
         --foreground: #f5f5f5;
         --card: #28242b;
         --card-foreground: #f2dddd;
         --popover: #0a0a0a;
         --popover-foreground: #f5f5f5;
-        --primary: #1e211e;
+        --primary: #a3d4f4;
         --primary-foreground: #f5f5f5;
-        --secondary: #834bd7;
-        --secondary-foreground: #f5f5f5;
-        --accent: #3c3444;
-        --accent-foreground: #f5f5f5;
-        --input: #a3d4f4;
-        --input-selected: #7cbeea;
+        --secondary: #434343;
+        --secondary-foreground: #13131b;
+        --accent: #a3d4f4;
+        --accent-foreground: #13131b;
+        --input: #c0e0f5;
+        --input-selected: #a3d4f4;
 
         --gradient-start: #20357c;
         --gradient-mid: #243e91;

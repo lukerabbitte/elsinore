@@ -55,6 +55,7 @@ module.exports = {
             },
             height: {
                 "screen-minus-padding-and-navbar": "calc(100vh - 3rem - 3rem)",
+                "screen-minus-padding-and-navbar-and-footer": "calc(100vh - 3rem - 6rem)",
             },
         },
     },

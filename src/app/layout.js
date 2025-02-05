@@ -8,16 +8,17 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Navbar from "@/components/Navbar";
 import AudioPlayer from "@/components/AudioPlayer";
 import { AnimatePresence } from "framer-motion";
+import { useState, createContext } from "react";
 
 const rosario = Rosario({
     subsets: ["latin"],
     display: "swap",
 });
 
-export const AudioContext = React.createContext();
+export const AudioContext = createContext();
 
 export default function RootLayout({ children }) {
-    const [audioSrc, setAudioSrc] = React.useState(null);
+    const [audioSrc, setAudioSrc] = useState(null);
 
     const handleAudioEnded = () => {
         setAudioSrc(null);
@@ -31,12 +32,15 @@ export default function RootLayout({ children }) {
                         <div className="mt-4 mx-4 sm:mt-0">
                             <Navbar />
                         </div>
-                        <main className="flex-grow p-4">{children}</main>
-                        <AnimatePresence>
-                            {audioSrc && (
-                                <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} />
-                            )}
-                        </AnimatePresence>
+                        <div class="flex flex-col lg:flex-row">
+                            <main className="flex-grow p-4">
+                                {children}</main>
+                            <AnimatePresence>
+                                {audioSrc && (
+                                    <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} />
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </AudioContext.Provider>
                 </NextThemesProvider>
             </body>

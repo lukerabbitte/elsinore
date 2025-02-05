@@ -9,7 +9,11 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
         "@radix-ui/react-avatar": "^1.1.2",
+        "@radix-ui/react-select": "^2.1.5",
+        "@radix-ui/react-slider": "^1.2.2",
         "@radix-ui/react-slot": "^1.1.1",
         "@radix-ui/react-switch": "^1.1.2",
         "@supabase/supabase-js": "^2.48.1",

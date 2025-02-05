@@ -29,7 +29,7 @@
     max-width: 100%;
 
     @media (min-width: 640px) {
-      max-width: 65ch;
+        max-width: 65ch;
     }
 }
 .embla__slide__number {
@@ -44,14 +44,23 @@
     user-select: none;
 }
 .embla__controls {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
     gap: 1.2rem;
-    margin-top: 1.8rem;
     position: absolute;
     bottom: 0;
-    padding: 1rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    @media (min-width: 640px) {
+        top: 0;
+        bottom: unset;
+        left: unset;
+        transform: none;
+        display: flex;
+        flex-direction: column;
+    }
 }
 .embla__buttons {
     display: grid;
@@ -61,7 +70,7 @@
 }
 .embla__button {
     position: relative; /* Ensure the button is positioned relative to its pseudo-element */
-    -webkit-tap-highlight-color: rgba(var(--foreground), 0.5);
+    -webkit-tap-highlight-color: rgba(var(--input), 0.5);
     -webkit-appearance: none;
     appearance: none;
     background-color: transparent;
@@ -76,7 +85,7 @@
     height: 3.6rem;
     z-index: 1;
     border-radius: 50%;
-    color: var(--foreground);
+    color: var(--input-selected);
     display: flex;
     align-items: center;
     justify-content: center;
