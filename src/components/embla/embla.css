@@ -92,7 +92,7 @@
     height: 3rem;
     border-radius: 50%;
     background: rgba(100, 116, 139, 0.2);
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(12px); /* same as "blur-md" in tailwind */
     z-index: -1;
 }
 
