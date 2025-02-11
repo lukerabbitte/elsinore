@@ -35,12 +35,12 @@ const HighlightCard = ({
                 </div>
             </div>
             <p className="line-clamp-6 max-w-full">{highlight.content}</p>
-            <div className="flex flex-row items-center justify-center">
+            <div className="flex flex-row gap-2 items-center justify-center">
                 <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
 
                 <button
                     onClick={handleListenClick}
-                    className="bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 min-w-12 rounded"
+                    className="bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 rounded"
                 >
                     {audioSrc === highlight.mp3_url ? "Stop" : "Listen"}
                 </button>

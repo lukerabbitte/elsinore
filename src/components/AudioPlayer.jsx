@@ -26,6 +26,9 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
         if (audioSrc) {
             audioRef.current.play();
             setIsPlaying(true);
+        } else {
+            audioRef.current.pause();
+            setIsPlaying(false);
         }
     }, [audioSrc]);
 
@@ -61,7 +64,7 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
     return (
         <div className="relative text-foreground flex flex-col gap-4 items-center justify-center h-[110px]">
             <div className="absolute bottom-0 w-full h-full bg-blur-gradient-md"></div>
-            <div className="z-30 w-full sm:w-1/4">
+            <div className="z-30 w-full">
                 <audio
                     ref={audioRef}
                     src={audioSrc}
@@ -76,7 +79,7 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: 100, opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="flex flex-col gap-4 w-full px-4 sm:px-2 py-2 bg-none sm:bg-slate-500/80 dark:sm:-bg-red-500 rounded-none sm:rounded-xl"
+                            className="flex flex-col gap-4 w-full px-4 py-4 sm:px-8"
                         >
                             <div className="flex items-center justify-between w-full">
                                 <button
