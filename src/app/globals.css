@@ -43,6 +43,28 @@ body {
                 var(--gradient-end-light) 100%
             );
         }
+
+        .bg-blur-gradient-md {
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+            -webkit-mask-image: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 1) 100%
+            );
+        }
+
+        .bg-blur-gradient-to-top-md {
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+            -webkit-mask-image: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 1) 100%
+            );
+        }
     }
 
     .dark {

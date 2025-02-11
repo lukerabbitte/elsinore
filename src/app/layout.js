@@ -36,16 +36,14 @@ export default function RootLayout({ children }) {
             <body className={`min-h-screen flex flex-col ${rosario.className}`}>
                 <NextThemesProvider attribute="class" defaultTheme="system">
                     <AudioContext.Provider value={{ audioSrc, setAudioSrc }}>
-                        <div className="mt-4 mx-4 sm:mt-0">
+                        <div className="absolute top-0 w-full z-10">
                             <Navbar />
                         </div>
-                        <div class="flex flex-col lg:flex-row">
-                            <main className="flex-grow p-4">{children}</main>
-                            <AnimatePresence>
-                                {audioSrc && (
-                                    <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} />
-                                )}
-                            </AnimatePresence>
+                        <div class="flex flex-col lg:flex-row relative">
+                            <main className="flex-grow">{children}</main>
+                            <div className="fixed bottom-0 left-0 right-0  z-10">
+                                <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} />
+                            </div>
                         </div>
                     </AudioContext.Provider>
                 </NextThemesProvider>

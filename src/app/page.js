@@ -6,7 +6,7 @@ const Home = async () => {
 
     return (
         <div className="flex flex-row justify-center items-center">
-            <div className="w-full h-screen-minus-padding-and-navbar">
+            <div className="w-full h-full">
                 <HighlightCardHolder highlights={highlights} />
             </div>
         </div>

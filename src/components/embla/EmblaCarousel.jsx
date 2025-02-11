@@ -23,17 +23,23 @@ const EmblaCarousel = (props) => {
                 <div className="embla__container">
                     {highlights.map((highlight, index) => (
                         <div className="embla__slide" key={index}>
-                            <HighlightCard highlight={highlight} />
+                            <HighlightCard
+                                highlight={highlight}
+                                onPrevButtonClick={onPrevButtonClick}
+                                onNextButtonClick={onNextButtonClick}
+                                prevBtnDisabled={prevBtnDisabled}
+                                nextBtnDisabled={nextBtnDisabled}
+                            />
                         </div>
                     ))}
                 </div>
 
-                <div className="embla__controls">
+                {/* <div className="embla__controls">
                     <div className="embla__buttons">
                         <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
                         <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
                     </div>
-                </div>
+                </div> */}
 
                 {/* <div className="embla__dots">
                     {scrollSnaps.map((_, index) => (
