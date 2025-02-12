@@ -14,6 +14,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { debounce } from "@/lib/utils";
 
 const AudioPlayer = ({ audioSrc, onEnded }) => {
     const audioRef = useRef(null);
@@ -21,16 +22,55 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
     const [playbackRate, setPlaybackRate] = useState(1);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [metadataLoaded, setMetadataLoaded] = useState(false);
 
     useEffect(() => {
         if (audioSrc) {
+            setMetadataLoaded(false);
             audioRef.current.play();
             setIsPlaying(true);
         } else {
             audioRef.current.pause();
             setIsPlaying(false);
+            setMetadataLoaded(false);
         }
     }, [audioSrc]);
+
+    useEffect(() => {
+        console.log("metadataLoaded", metadataLoaded);
+    }, [metadataLoaded]);
+
+    // Hijack spacebar and arrow left and right events while audio is playing and metadata is loaded
+    useEffect(() => {
+        if (!metadataLoaded) return;
+
+        const handleKeyDown = (event) => {
+            if (!audioSrc) return;
+
+            switch (event.key) {
+                case " ":
+                    event.preventDefault();
+                    togglePlayPause();
+                    break;
+                case "ArrowLeft":
+                    event.preventDefault();
+                    debouncedSeekBy(-5);
+                    break;
+                case "ArrowRight":
+                    event.preventDefault();
+                    debouncedSeekBy(5);
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [audioSrc, isPlaying, metadataLoaded]);
 
     const togglePlayPause = () => {
         if (isPlaying) {
@@ -59,7 +99,16 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
 
     const handleLoadedMetadata = () => {
         setDuration(audioRef.current.duration);
+        setMetadataLoaded(true);
     };
+
+    const seekBy = (seconds) => {
+        const newTime = Math.max(0, Math.min(duration, audioRef.current.currentTime + seconds));
+        audioRef.current.currentTime = newTime;
+        setCurrentTime(newTime);
+    };
+
+    const debouncedSeekBy = debounce(seekBy, 50);
 
     return (
         <div className="relative text-foreground flex flex-col gap-4 items-center justify-center h-[110px]">

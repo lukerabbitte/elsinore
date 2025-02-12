@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useRef, useEffect } from "react";
 import UserAvatar from "@/components/UserAvatar";
 import { AudioContext } from "@/app/layout";
 import { PrevButton, NextButton } from "@/components/embla/EmblaCarouselArrowButtons";
@@ -10,6 +10,7 @@ const HighlightCard = ({
     onNextButtonClick,
     prevBtnDisabled,
     nextBtnDisabled,
+    isFocused,
 }) => {
     const { audioSrc, setAudioSrc } = useContext(AudioContext);
 
@@ -21,8 +22,30 @@ const HighlightCard = ({
         }
     };
 
+    // Hijack enter button
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (isFocused) {
+                switch (event.key) {
+                    case "Enter":
+                        event.preventDefault();
+                        handleListenClick();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isFocused, audioSrc]);
+
     return (
-        <div className="bg-gradient-radial rounded-xl h-2/3 sm:h-full max-w-[65ch] mx-4 sm:mx-0 p-4 flex flex-col gap-4 justify-between items-center">
+        <div className="bg-gradient-radial rounded-xl h-2/3 sm:h-full max-w-[65ch] mx-4 sm:mx-0 p-4 flex flex-col gap-4 justify-between items-center focus:outline-none">
             <div className="flex flex-row items-center justify-between w-full gap-4">
                 <h1 className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance">
                     {highlight.title}
