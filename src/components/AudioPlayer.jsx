@@ -16,7 +16,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { debounce } from "@/lib/utils";
 
-const AudioPlayer = ({ audioSrc, onEnded }) => {
+const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [playbackRate, setPlaybackRate] = useState(1);
@@ -108,7 +108,12 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
 
     return (
         <div className="relative text-foreground flex flex-col gap-4 items-center justify-center h-[110px]">
-            <div className="absolute bottom-0 w-full h-full bg-blur-gradient-md"></div>
+            
+            {/* Background blur used on homepage for immersive effect while scrolling, not really needed elsewhere */}
+            {(currentRoute === "/" || audioSrc) && (
+                <div className="absolute bottom-0 w-full h-full bg-blur-gradient-md"></div>
+            )}
+
             <div className="z-30 w-full">
                 <audio
                     ref={audioRef}

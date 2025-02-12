@@ -9,6 +9,7 @@ import AudioPlayer from "@/components/AudioPlayer";
 import { AnimatePresence } from "framer-motion";
 import { useState, createContext } from "react";
 import Head from "next/head";
+import { usePathname } from "next/navigation";
 import { config, library } from "@fortawesome/fontawesome-svg-core";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -27,6 +28,7 @@ export const AudioContext = createContext();
 export default function RootLayout({ children }) {
     const [audioSrc, setAudioSrc] = useState(null);
     const [audioEnded, setAudioEnded] = useState(false);
+    const pathname = usePathname();
 
     const handleAudioEnded = () => {
         setAudioSrc(null);
@@ -51,7 +53,7 @@ export default function RootLayout({ children }) {
                         <div className="flex flex-col lg:flex-row relative">
                             <main className="flex-grow">{children}</main>
                             <div className="fixed bottom-0 left-0 right-0 z-10">
-                                <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} />
+                                <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} currentRoute={pathname} />
                             </div>
                         </div>
                     </AudioContext.Provider>
