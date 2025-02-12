@@ -13,6 +13,7 @@ const HighlightCard = ({
     isFocused,
 }) => {
     const { audioSrc, setAudioSrc } = useContext(AudioContext);
+    const togglePlaybackButtonRef = useRef(null);
 
     const handleListenClick = () => {
         if (audioSrc === highlight.mp3_url) {
@@ -22,13 +23,14 @@ const HighlightCard = ({
         }
     };
 
-    // Hijack enter button
-    useEffect(() => {
+    // Hijack enter button TODO - parked for now as it messes with keyboard navigation
+    /* useEffect(() => {
         const handleKeyDown = (event) => {
             if (isFocused) {
                 switch (event.key) {
                     case "Enter":
                         event.preventDefault();
+                        togglePlaybackButtonRef.current.focus();
                         handleListenClick();
                         break;
                     default:
@@ -42,10 +44,10 @@ const HighlightCard = ({
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [isFocused, audioSrc]);
+    }, [isFocused, audioSrc]); */
 
     return (
-        <div className="bg-gradient-radial rounded-xl h-2/3 sm:h-full max-w-[65ch] mx-4 sm:mx-0 p-4 flex flex-col gap-4 justify-between items-center focus:outline-none">
+        <div className="bg-gradient-radial rounded-xl h-2/3 sm:h-full max-w-prose max-h-144 mx-4 sm:mx-0 p-4 flex flex-col gap-4 justify-between items-center focus:outline-none">
             <div className="flex flex-row items-center justify-between w-full gap-4">
                 <h1 className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance">
                     {highlight.title}
@@ -62,6 +64,7 @@ const HighlightCard = ({
                 <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
 
                 <button
+                    ref={togglePlaybackButtonRef}
                     onClick={handleListenClick}
                     className="bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 rounded"
                 >

@@ -58,6 +58,9 @@ module.exports = {
                 "screen-minus-padding-and-navbar-and-footer": "calc(100vh - 3rem - 6rem)",
                 "screen-minus-audio-player": "calc(100vh - 110px)",
             },
+            maxHeight: {
+                "144": "36rem",
+            }
         },
     },
     plugins: [require("tailwindcss-animate")],

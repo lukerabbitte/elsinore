@@ -21,7 +21,7 @@ body {
         --popover: #dce6ff;
         --popover-foreground: #2d2d2d;
         --primary: #20357c;
-        --primary-foreground: #1a1a1a;
+        --primary-foreground: #f5f5f5;
         --secondary: #bcbcbc;
         --secondary-foreground: #e5e9f3;
         --accent: #41569d;
@@ -77,7 +77,7 @@ body {
         --popover: #1f1f29;
         --popover-foreground: #c0e0f5;
         --primary: #a3d4f4;
-        --primary-foreground: #f5f5f5;
+        --primary-foreground: #1a1a1a;
         --secondary: #434343;
         --secondary-foreground: #13131b;
         --accent: #a3d4f4;

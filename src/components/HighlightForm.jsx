@@ -73,7 +73,10 @@ const HighlightForm = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8 bg-gradient-radial p-4 w-full max-w-prose rounded-xl"
+            >
                 <FormField
                     control={form.control}
                     name="title"
@@ -161,7 +164,9 @@ const HighlightForm = () => {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <div className="flex flex-row items-center justify-center">
+                    <Button className="rounded-[6px]" type="submit">Submit</Button>
+                </div>
             </form>
         </Form>
     );
