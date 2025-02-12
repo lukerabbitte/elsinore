@@ -26,7 +26,9 @@ const EmblaCarousel = (props) => {
                 const nextIndex = selectedIndex + 1 < highlights.length ? selectedIndex + 1 : null;
                 if (nextIndex) {
                     emblaApi.scrollTo(nextIndex);
-                    setAudioSrc(highlights[nextIndex].mp3_url);
+                    setTimeout(() => {
+                        setAudioSrc(highlights[nextIndex].mp3_url);
+                    }, 2000);
                 }
             }
             setAudioEnded(false);
