@@ -9,6 +9,13 @@ import AudioPlayer from "@/components/AudioPlayer";
 import { AnimatePresence } from "framer-motion";
 import { useState, createContext } from "react";
 import Head from "next/head";
+import { config, library } from "@fortawesome/fontawesome-svg-core";
+import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
+
+// Add icons to the library
+library.add(faHome, faPlus);
 
 const rosario = Rosario({
     subsets: ["latin"],
@@ -26,8 +33,6 @@ export default function RootLayout({ children }) {
         setAudioEnded(true);
     };
 
-    <meta name="apple-mobile-web-app-title" content="Elsinore" />;
-
     return (
         <html lang="en">
             <Head>
@@ -37,13 +42,15 @@ export default function RootLayout({ children }) {
             </Head>
             <body className={`min-h-screen flex flex-col ${rosario.className}`}>
                 <NextThemesProvider attribute="class" defaultTheme="system">
-                    <AudioContext.Provider value={{ audioSrc, setAudioSrc, audioEnded, setAudioEnded }}>
+                    <AudioContext.Provider
+                        value={{ audioSrc, setAudioSrc, audioEnded, setAudioEnded }}
+                    >
                         <div className="absolute top-0 w-full z-10">
                             <Navbar />
                         </div>
-                        <div class="flex flex-col lg:flex-row relative">
+                        <div className="flex flex-col lg:flex-row relative">
                             <main className="flex-grow">{children}</main>
-                            <div className="fixed bottom-0 left-0 right-0  z-10">
+                            <div className="fixed bottom-0 left-0 right-0 z-10">
                                 <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} />
                             </div>
                         </div>

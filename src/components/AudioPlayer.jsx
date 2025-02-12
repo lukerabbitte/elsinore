@@ -124,7 +124,7 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: 100, opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            className="flex flex-col gap-4 w-full px-4 py-4 sm:px-8"
+                            className="flex flex-col gap-4 w-full px-4 py-4"
                         >
                             <div className="flex items-center justify-between w-full">
                                 <button

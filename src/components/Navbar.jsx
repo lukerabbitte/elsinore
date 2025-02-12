@@ -19,28 +19,32 @@ const Navbar = () => {
         <div className="relative h-[48px]">
             <div className="absolute top-0 w-full h-[48px] bg-blur-gradient-to-top-md"></div>
             <div className="w-full h-full flex flex-row justify-between items-center p-4">
-                <div className="space-x-4 z-30">
-                    <Link href="/" className="text-primary hover:underline">
+                <div className="space-x-8 z-30 text-lg">
+                    <Link href="/" className="text-primary">
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
                                     <FontAwesomeIcon icon={faHome} />
                                 </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Home</p>
-                                </TooltipContent>
+                                <div className="hidden lg:inline-block">
+                                    <TooltipContent>
+                                        <p>Home</p>
+                                    </TooltipContent>
+                                </div>
                             </Tooltip>
                         </TooltipProvider>
                     </Link>
-                    <Link href="/edit" className="text-primary hover:underline z-30">
+                    <Link href="/edit" className="text-primary">
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger>
                                     <FontAwesomeIcon icon={faPlus} />
                                 </TooltipTrigger>
-                                <TooltipContent>
-                                    <p>Add Highlight</p>
-                                </TooltipContent>
+                                <div className="hidden lg:inline-block">
+                                    <TooltipContent>
+                                        <p>Add Highlight</p>
+                                    </TooltipContent>
+                                </div>
                             </Tooltip>
                         </TooltipProvider>
                     </Link>
