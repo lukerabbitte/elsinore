@@ -19,9 +19,11 @@ export const AudioContext = createContext();
 
 export default function RootLayout({ children }) {
     const [audioSrc, setAudioSrc] = useState(null);
+    const [audioEnded, setAudioEnded] = useState(false);
 
     const handleAudioEnded = () => {
         setAudioSrc(null);
+        setAudioEnded(true);
     };
 
     <meta name="apple-mobile-web-app-title" content="Elsinore" />;
@@ -35,7 +37,7 @@ export default function RootLayout({ children }) {
             </Head>
             <body className={`min-h-screen flex flex-col ${rosario.className}`}>
                 <NextThemesProvider attribute="class" defaultTheme="system">
-                    <AudioContext.Provider value={{ audioSrc, setAudioSrc }}>
+                    <AudioContext.Provider value={{ audioSrc, setAudioSrc, audioEnded, setAudioEnded }}>
                         <div className="absolute top-0 w-full z-10">
                             <Navbar />
                         </div>

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import { AudioContext } from "@/app/layout";
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
 import { PrevButton, NextButton, usePrevNextButtons } from "./EmblaCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
@@ -9,6 +10,8 @@ import HighlightCard from "@/components/HighlightCard";
 import "./embla.css";
 
 const EmblaCarousel = (props) => {
+    const { audioSrc, setAudioSrc, audioEnded, setAudioEnded } = useContext(AudioContext);
+
     const { highlights, options } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel(options, [WheelGesturesPlugin()]);
 
@@ -16,6 +19,19 @@ const EmblaCarousel = (props) => {
         usePrevNextButtons(emblaApi);
 
     const { selectedIndex } = useDotButton(emblaApi);
+
+    useEffect(() => {
+        if (audioEnded) {
+            if (emblaApi) {
+                const nextIndex = selectedIndex + 1 < highlights.length ? selectedIndex + 1 : null;
+                if (nextIndex) {
+                    emblaApi.scrollTo(nextIndex);
+                    setAudioSrc(highlights[nextIndex].mp3_url);
+                }
+            }
+            setAudioEnded(false);
+        }
+    }, [audioEnded, emblaApi]);
 
     // Hijack up and down arrow to navigate through cards
     useEffect(() => {

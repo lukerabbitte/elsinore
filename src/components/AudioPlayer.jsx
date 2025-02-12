@@ -36,10 +36,6 @@ const AudioPlayer = ({ audioSrc, onEnded }) => {
         }
     }, [audioSrc]);
 
-    useEffect(() => {
-        console.log("metadataLoaded", metadataLoaded);
-    }, [metadataLoaded]);
-
     // Hijack spacebar and arrow left and right events while audio is playing and metadata is loaded
     useEffect(() => {
         if (!metadataLoaded) return;
