@@ -11,6 +11,10 @@ module.exports = {
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
+                muted: {
+                    DEFAULT: "var(--muted-background)",
+                    foreground: "var(--muted-foreground)",
+                },
                 card: {
                     DEFAULT: "var(--card)",
                     foreground: "var(--card-foreground)",
@@ -31,10 +35,15 @@ module.exports = {
                     DEFAULT: "var(--accent)",
                     foreground: "var(--accent-foreground)",
                 },
+                formfield: {
+                    DEFAULT: "var(--form-field)",
+                    foreground: "var(--form-field-foreground)",
+                },
                 border: "var(--border)",
                 input: "var(--input)",
-                "input-selected": "var(--input-selected)", // Added input-selected color
-                ring: "var(--ring)", // Keep ring color for focus states
+                "input-selected": "var(--input-selected)",
+                ring: "var(--ring)",
+                destructive: "var(--destructive)",
                 chart: {
                     1: "var(--chart-1)",
                     2: "var(--chart-2)",
@@ -42,11 +51,6 @@ module.exports = {
                     4: "var(--chart-4)",
                     5: "var(--chart-5)",
                 },
-            },
-            borderRadius: {
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)",
             },
             screens: {
                 xxs: "340px",
@@ -57,10 +61,11 @@ module.exports = {
                 "screen-minus-padding-and-navbar": "calc(100vh - 3rem - 3rem)",
                 "screen-minus-padding-and-navbar-and-footer": "calc(100vh - 3rem - 6rem)",
                 "screen-minus-audio-player": "calc(100vh - 110px)",
+                "screen-minus-audio-player-and-navbar": "calc(100vh - 110px - 48px)",
             },
             maxHeight: {
-                "144": "36rem",
-            }
+                144: "36rem",
+            },
         },
     },
     plugins: [require("tailwindcss-animate")],

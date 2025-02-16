@@ -24,11 +24,11 @@ const HighlightCard = ({
     };
 
     // Hijack enter button TODO - parked for now as it messes with keyboard navigation
-    /* useEffect(() => {
+    useEffect(() => {
         const handleKeyDown = (event) => {
             if (isFocused) {
                 switch (event.key) {
-                    case "Enter":
+                    case "k":
                         event.preventDefault();
                         togglePlaybackButtonRef.current.focus();
                         handleListenClick();
@@ -44,7 +44,7 @@ const HighlightCard = ({
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [isFocused, audioSrc]); */
+    }, [isFocused, audioSrc]);
 
     return (
         <div className="bg-gradient-radial rounded-xl h-2/3 sm:h-full max-w-prose max-h-144 mx-4 sm:mx-0 p-4 flex flex-col gap-4 justify-between items-center focus:outline-none">

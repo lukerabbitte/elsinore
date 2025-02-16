@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,6 +25,8 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
     const [duration, setDuration] = useState(0);
     const [metadataLoaded, setMetadataLoaded] = useState(false);
 
+    const pathname = usePathname();
+
     useEffect(() => {
         if (audioSrc) {
             setMetadataLoaded(false);
@@ -38,7 +41,8 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
 
     // Hijack spacebar and arrow left and right events while audio is playing and metadata is loaded
     useEffect(() => {
-        if (!metadataLoaded) return;
+        
+        if (!metadataLoaded || pathname!=="/") return;  // Do not try use keyboard controls until seek data loaded, or when we are not on homepage.
 
         const handleKeyDown = (event) => {
             if (!audioSrc) return;
@@ -66,7 +70,7 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [audioSrc, isPlaying, metadataLoaded]);
+    }, [audioSrc, isPlaying, metadataLoaded, pathname]);
 
     const togglePlayPause = () => {
         if (isPlaying) {
@@ -108,13 +112,12 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
 
     return (
         <div className="relative text-foreground flex flex-col gap-4 items-center justify-center h-[110px]">
-            
             {/* Background blur used on homepage for immersive effect while scrolling, not really needed elsewhere */}
             {(currentRoute === "/" || audioSrc) && (
                 <div className="absolute bottom-0 w-full h-full bg-blur-gradient-md"></div>
             )}
 
-            <div className="z-30 w-full">
+            <div className="w-full z-20">
                 <audio
                     ref={audioRef}
                     src={audioSrc}
