@@ -83,6 +83,8 @@ const HighlightForm = () => {
                 title: "Stay curious.",
                 description: "Thank you: Elsinore successfully created your highlight.",
             });
+            form.reset();
+            setHasInteracted({title: false, content: false})
         }
     }, [success]);
 
