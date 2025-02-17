@@ -75,7 +75,7 @@ const HighlightForm = () => {
 
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(true);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         if (success) {
