@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -11,10 +11,23 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 const Navbar = () => {
     const { theme, setTheme } = useTheme();
+    const [activePage, setActivePage] = useState(null);
     const pathname = usePathname();
 
     const toggleTheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
+    };
+
+    useEffect(() => {
+        if (pathname === "/") {
+            setActivePage("home");
+        } else if (pathname === "/edit") {
+            setActivePage("edit");
+        }
+    }, [pathname]);
+
+    const handleNavClick = (page) => {
+        setActivePage(page);
     };
 
     return (
@@ -28,10 +41,11 @@ const Navbar = () => {
                                 <Link
                                     href="/"
                                     className={`transition-transform text-md duration-950 w-9 h-8 flex items-center justify-center rounded-full ${
-                                        pathname === "/"
+                                        activePage === "home"
                                             ? "text-primary-foreground scale-90 bg-input"
                                             : "text-primary"
                                     }`}
+                                    onClick={() => handleNavClick("home")}
                                 >
                                     <FontAwesomeIcon icon={faHome} />
                                 </Link>
@@ -49,10 +63,11 @@ const Navbar = () => {
                                 <Link
                                     href="/edit"
                                     className={`transition-transform text-lg duration-950 w-9 h-8 flex items-center justify-center rounded-full ${
-                                        pathname === "/edit"
+                                        activePage === "edit"
                                             ? "text-primary-foreground scale-90 bg-input"
                                             : "text-primary"
                                     }`}
+                                    onClick={() => handleNavClick("edit")}
                                 >
                                     <FontAwesomeIcon icon={faPlus} />
                                 </Link>

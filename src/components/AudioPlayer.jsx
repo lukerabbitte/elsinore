@@ -176,7 +176,7 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
                     </div>
                 </div>
             ) : (
-                audioSrc && <DraggablePlayPauseButton handleSimulaltedClick={togglePlayPause} isPlaying={isPlaying} />
+                <DraggablePlayPauseButton handleSimulaltedClick={togglePlayPause} isPlaying={isPlaying} audioSrc={audioSrc} />
             )}
         </>
     );
