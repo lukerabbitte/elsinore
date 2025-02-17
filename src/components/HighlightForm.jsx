@@ -230,12 +230,12 @@ const HighlightForm = () => {
                         </FormItem>
                     )}
                 />
-                <FormField
+                {/* <FormField
                     control={form.control}
                     name="wikipediaUrl"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Wikipedia URL</FormLabel>
+                            <FormLabel>Wikipedia URL (Optional)</FormLabel>
                             <FormControl>
                                 <Input
                                     className="border-input bg-formfield"
@@ -250,7 +250,7 @@ const HighlightForm = () => {
                             <FormMessage />
                         </FormItem>
                     )}
-                />
+                /> */}
                 <FormField
                     control={form.control}
                     name="voiceId"
