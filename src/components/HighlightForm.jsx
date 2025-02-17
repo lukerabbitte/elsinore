@@ -159,7 +159,7 @@ const HighlightForm = () => {
                             </FormLabel>
                             <FormControl>
                                 <input
-                                    className="w-full text-2xl text-foreground placeholder:text-foreground font-semibold rounded-md bg-transparent lg:font-extrabold ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="w-full truncate text-2xl text-foreground placeholder:text-foreground font-semibold rounded-md bg-transparent lg:font-extrabold ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                                     type="text"
                                     placeholder="Add a title..."
                                     {...field}
