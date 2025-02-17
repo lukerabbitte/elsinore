@@ -10,7 +10,14 @@ import HighlightCard from "@/components/HighlightCard";
 import "./embla.css";
 
 const EmblaCarousel = (props) => {
-    const { audioSrc, setAudioSrc, audioEnded, setAudioEnded } = useContext(AudioContext);
+    const {
+        audioSrc,
+        setAudioSrc,
+        currentlyPlayingTitle,
+        setCurrentlyPlayingTitle,
+        audioEnded,
+        setAudioEnded,
+    } = useContext(AudioContext);
 
     const { highlights, options } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel(options, [WheelGesturesPlugin()]);
@@ -28,6 +35,8 @@ const EmblaCarousel = (props) => {
                     emblaApi.scrollTo(nextIndex);
                     setTimeout(() => {
                         setAudioSrc(highlights[nextIndex].mp3_url);
+                        setCurrentlyPlayingTitle(highlights[nextIndex].title);
+                        set;
                     }, 2000);
                 }
             }

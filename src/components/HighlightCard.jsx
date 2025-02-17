@@ -21,8 +21,8 @@ const HighlightCard = ({
             setAudioSrc(null); // Stop the audio if it's already playing
             setCurrentlyPlayingTitle(null);
         } else {
-            setCurrentlyPlayingTitle(highlight.title);
             setAudioSrc(highlight.mp3_url); // Play the selected audio
+            setCurrentlyPlayingTitle(highlight.title);
         }
     };
 

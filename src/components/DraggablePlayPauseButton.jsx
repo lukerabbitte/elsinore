@@ -38,14 +38,32 @@ const DraggablePlayPauseButton = ({ handleSimulaltedClick, isPlaying }) => {
                 className="p-4"
             >
                 <Draggable onStart={handleDragStart} onStop={handleDragStop}>
-                    <div className="max-w-64 h-16 p-4 bg-blue-900/20 dark:bg-blue-200/20 backdrop-blur-sm rounded-xl flex flex-row gap-4 items-center justify-center shadow-xl cursor-pointer z-50">
-                        <div className="w-5/6 flex flex-row gap-4 items-center justify-start">
-                            <button className="text-2xl text-primary w-4 text-left">
-                                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
-                            </button>
-                            <span className="text-xs truncate max-w-full">
-                                {currentlyPlayingTitle}
-                            </span>
+                    <div className="max-w-64 h-16 p-4 bg-blue-900/20 dark:bg-blue-200/20 backdrop-blur-sm rounded-xl flex flex-row gap-2 items-center justify-between shadow-xl cursor-pointer z-50">
+                        <div className="w-5/6 flex flex-row gap-2 items-center justify-start">
+                            <div className="flex flex-row gap-1 items-center">
+                                <button className="text-2xl text-primary min-w-6 text-left">
+                                    <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+                                </button>
+                                <span className="text-xs line-clamp-2 text-balance max-w-full">
+                                    {currentlyPlayingTitle}
+                                </span>
+                            </div>
+
+                            <div className="w-6">
+                                {isPlaying && (
+                                    <motion.div
+                                        className="flex items-center ml-auto"
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        <div className="sound-wave-bar bg-primary rounded-md"></div>
+                                        <div className="sound-wave-bar bg-primary rounded-md"></div>
+                                        <div className="sound-wave-bar bg-primary rounded-md"></div>
+                                    </motion.div>
+                                )}
+                            </div>
                         </div>
 
                         <div className="w-1/6 flex flex-row items-center justify-end">
