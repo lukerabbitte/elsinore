@@ -17,7 +17,10 @@
 .embla__container {
     display: flex;
     touch-action: pan-x pinch-zoom;
-    margin-top: calc(var(--slide-spacing) * -1);
+    margin-top: calc((var(--slide-spacing) * -1));
+    @media (min-width: 640px) {
+        margin-top: calc((var(--slide-spacing) * -1) + 1rem);
+    }
     height: calc(var(--slide-spacing) + var(--slide-height));
     flex-direction: column;
     align-items: center;

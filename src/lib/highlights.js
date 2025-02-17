@@ -1,31 +1,58 @@
 import { supabase } from "@/lib/supabase";
+import { generateSlug } from "@/lib/utils";
+import { generateAudio } from "@/lib/audioGeneration";
+import { saveAudio } from "@/lib/audioStorage";
 
-export const createHighlight = async ({
-    user_id,
-    title,
-    content,
-    full_text_url,
-    wikipedia_url,
-    mp3_url,
-    slug,
-    book_id,
-}) => {
+export const createHighlight = async (values) => {
+    const { title, content, fullTextUrl, wikipediaUrl, voiceId } = values;
+
+    const userId = "43725733-9ce0-4e44-b527-27764e673a97"; // TODO remove, obvs this is silly
+
     try {
-        const { data, error } = await supabase
-            .from("highlight")
-            .insert([
-                {
-                    user_id,
-                    title,
-                    content,
-                    full_text_url,
-                    wikipedia_url,
-                    mp3_url,
-                    slug,
-                    book_id,
-                },
-            ])
-            .single();
+        // Validate mandatory inputs
+        if (!userId || !title || !content || !voiceId) {
+            throw new Error("Missing required fields: userId, title, content, or voiceId");
+        }
+
+        // Generate the slug
+        const slug = generateSlug(title);
+
+        // Generate the audio blob
+        let audioBlob;
+        try {
+            audioBlob = await generateAudio({ text: content, voiceId });
+
+            // Validate the audio blob
+            if (!audioBlob || audioBlob.size === 0) {
+                throw new Error("Generated audio is empty or invalid");
+            }
+        } catch (audioError) {
+            console.error("Audio generation failed:", audioError);
+            throw new Error(`Audio generation failed: ${audioError.message}`);
+        }
+
+        // Only proceed to storage if we have valid audio
+        let mp3_url;
+        try {
+            mp3_url = await saveAudio({ highlightFilename: slug, audioBlob });
+        } catch (storageError) {
+            console.error("Storage save failed:", storageError);
+            throw new Error(`Storage save failed: ${storageError.message}`);
+        }
+
+        // Create the highlight
+        const highlightData = {
+            user_id: userId,
+            slug,
+            title,
+            content,
+            full_text_url: fullTextUrl,
+            wikipedia_url: wikipediaUrl,
+            mp3_url,
+            elevenlabs_voice_id: voiceId,
+        };
+
+        const { data, error } = await supabase.from("highlight").insert([highlightData]).single();
 
         if (error) throw error;
 
@@ -86,13 +113,18 @@ export const deleteHighlight = async (highlightId) => {
 // Function to fetch all highlights with user profile information from join
 export const getAllHighlights = async () => {
     try {
-        const { data, error } = await supabase.from("highlight").select(`
+        const { data, error } = await supabase
+            .from("highlight")
+            .select(
+                `
                 *,
                 profile:profile (
                     avatar_image,
                     display_name
                 )
-            `);
+            `
+            )
+            .order("created_at", { ascending: false });
 
         if (error) throw error;
 

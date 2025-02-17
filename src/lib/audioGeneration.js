@@ -1,3 +1,16 @@
+import { ElevenLabsClient } from "elevenlabs";
+const client = new ElevenLabsClient({ apiKey: `${process.env.ELEVENLABS_API_KEY}` });
+
+export const getAllVoices = async () => {
+    try {
+        const voices = await client.voices.getAll();
+        return voices;
+    } catch (error) {
+        throw error;
+        console.error("Could not retrieve ElevenLabs voices")
+    }
+};
+
 export const generateAudio = async ({ text, voiceId }) => {
     try {
         const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
