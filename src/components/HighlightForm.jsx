@@ -81,10 +81,12 @@ const HighlightForm = () => {
         if (success) {
             toast({
                 title: "Stay curious.",
-                description: "Thank you: Elsinore successfully created your highlight.",
+                description: `Thank you: Elsinore successfully created your highlight: ${form.getValues(
+                    "title"
+                )}.`,
             });
             form.reset();
-            setHasInteracted({title: false, content: false})
+            setHasInteracted({ title: false, content: false });
         }
     }, [success]);
 
