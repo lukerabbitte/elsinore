@@ -11,7 +11,8 @@ export const generateSlug = (title) => {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)+/g, "");
-    return `${slug}-${uuidv4()}`;
+    const timestamp = Date.now();
+    return `${slug}-${timestamp}`;
 };
 
 export const debounce = (func, delay) => {

@@ -2,14 +2,13 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -25,6 +24,9 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import UserAvatar from "@/components/UserAvatar";
+import { createHighlight } from "@/lib/highlights";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 const formSchema = z.object({
     title: z
@@ -40,8 +42,8 @@ const formSchema = z.object({
         .min(5, {
             message: "Content must be at least 5 characters.",
         })
-        .max(500, {
-            message: "Content must be at most 500 characters.",
+        .max(1000, {
+            message: "Content must be at most 1000 characters.",
         }),
     fullTextUrl: z.string().url({
         message: "Must be a valid URL.",
@@ -69,8 +71,46 @@ const HighlightForm = () => {
         },
     });
 
-    const onSubmit = (values) => {
-        console.log(values);
+    const { toast } = useToast();
+
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState(true);
+
+    useEffect(() => {
+        if (success) {
+            toast({
+                title: "Stay curious.",
+                description: "Thank you: Elsinore successfully created your highlight.",
+            });
+        }
+    }, [success]);
+
+    useEffect(() => {
+        if (error) {
+            toast({
+                variant: "destructive",
+                title: "Ah no!",
+                description: "Elsinore couldn't generate your highlight. Try again?",
+                action: <ToastAction altText="Try again">Try again</ToastAction>,
+            });
+        }
+    }, [error]);
+
+    const onSubmit = async (values) => {
+        setLoading(true);
+        setSuccess(false);
+        setError(false);
+
+        try {
+            const newHighlight = await createHighlight(values);
+            setSuccess(true);
+        } catch (error) {
+            console.error(error);
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
     };
 
     /* Watch content lengths for character counts */
@@ -143,11 +183,11 @@ const HighlightForm = () => {
                                     className={`ml-2 text-sm ${getCounterClass(
                                         contentValue,
                                         5,
-                                        500,
+                                        1000,
                                         hasInteracted.content
                                     )}`}
                                 >
-                                    {contentValue.length} / 500
+                                    {contentValue.length} / 1000
                                 </span>
                             </FormLabel>
                             <FormControl>
@@ -219,8 +259,17 @@ const HighlightForm = () => {
                                         <SelectValue placeholder="Select a voice..." />
                                     </SelectTrigger>
                                     <SelectContent className="bg-formfield border-input">
-                                        <SelectItem value="D38z5RcWu1voky8WS1ja">
-                                            Voice 1 - D38z5RcWu1voky8WS1ja
+                                        <SelectItem value="8SNzJpKT62Cqqqe8Injx">
+                                            Michael - A male Irish storytelling voice
+                                        </SelectItem>
+                                        <SelectItem value="wYiPSnV1DhrUtMgJiRr1">
+                                            Megan - A young female Northern Irish voice
+                                        </SelectItem>
+                                        <SelectItem value="SAz9YHcvj6GT2YYXdXww">
+                                            River - A young female American voice
+                                        </SelectItem>
+                                        <SelectItem value="onwK4e9ZLuTAKqWW03F9">
+                                            Daniel - An authoritative British news voice
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -230,10 +279,11 @@ const HighlightForm = () => {
                 />
                 <div className="flex flex-row items-center justify-center">
                     <Button
-                        className="rounded-md bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20"
+                        className="rounded-md bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 hover:scale-105 transition-all duration-300"
                         type="submit"
+                        disabled={loading}
                     >
-                        Submit
+                        {loading ? "Loading..." : "Submit"}
                     </Button>
                 </div>
             </form>

@@ -9,6 +9,7 @@ import AudioPlayer from "@/components/AudioPlayer";
 import { AnimatePresence } from "framer-motion";
 import { useState, createContext } from "react";
 import Head from "next/head";
+import { Toaster } from "@/components/ui/toaster";
 import { usePathname } from "next/navigation";
 import { config, library } from "@fortawesome/fontawesome-svg-core";
 import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -47,7 +48,14 @@ export default function RootLayout({ children }) {
             <body className={`min-h-screen flex flex-col ${rosario.className}`}>
                 <NextThemesProvider attribute="class" defaultTheme="system">
                     <AudioContext.Provider
-                        value={{ audioSrc, setAudioSrc, currentlyPlayingTitle, setCurrentlyPlayingTitle, audioEnded, setAudioEnded }}
+                        value={{
+                            audioSrc,
+                            setAudioSrc,
+                            currentlyPlayingTitle,
+                            setCurrentlyPlayingTitle,
+                            audioEnded,
+                            setAudioEnded,
+                        }}
                     >
                         <div className="absolute top-0 w-full">
                             <Navbar />
@@ -55,8 +63,13 @@ export default function RootLayout({ children }) {
                         <div className="flex flex-col lg:flex-row relative">
                             <main className="flex-grow">{children}</main>
                             <div className="fixed bottom-0 left-0 right-0">
-                                <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} currentRoute={pathname} />
+                                <AudioPlayer
+                                    audioSrc={audioSrc}
+                                    onEnded={handleAudioEnded}
+                                    currentRoute={pathname}
+                                />
                             </div>
+                            <Toaster />
                         </div>
                     </AudioContext.Provider>
                 </NextThemesProvider>

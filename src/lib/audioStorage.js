@@ -8,7 +8,8 @@ export const saveAudio = async ({ highlightFilename, audioBlob }) => {
     });
 
     if (error) throw error;
-    return data.path;
+
+    return `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/audio-files/${data.path}`;
 };
 
 export const getAudioByHighlightFilename = (highlightFilename) => {

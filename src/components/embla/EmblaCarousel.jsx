@@ -36,7 +36,6 @@ const EmblaCarousel = (props) => {
                     setTimeout(() => {
                         setAudioSrc(highlights[nextIndex].mp3_url);
                         setCurrentlyPlayingTitle(highlights[nextIndex].title);
-                        set;
                     }, 2000);
                 }
             }

@@ -40,7 +40,7 @@ const Navbar = () => {
                             <TooltipTrigger>
                                 <Link
                                     href="/"
-                                    className={`transition-transform text-md duration-950 w-9 h-8 flex items-center justify-center rounded-full ${
+                                    className={`transition-transform text-md duration-300 w-9 h-8 flex items-center justify-center rounded-full ${
                                         activePage === "home"
                                             ? "text-primary-foreground scale-90 bg-input"
                                             : "text-primary"
@@ -62,7 +62,7 @@ const Navbar = () => {
                             <TooltipTrigger>
                                 <Link
                                     href="/edit"
-                                    className={`transition-transform text-lg duration-950 w-9 h-8 flex items-center justify-center rounded-full ${
+                                    className={`transition-transform text-lg duration-300 w-9 h-8 flex items-center justify-center rounded-full ${
                                         activePage === "edit"
                                             ? "text-primary-foreground scale-90 bg-input"
                                             : "text-primary"
