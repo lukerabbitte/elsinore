@@ -10,12 +10,12 @@ import {
     SelectContent,
     SelectGroup,
     SelectItem,
-    SelectLabel,
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { debounce } from "@/lib/utils";
+import DraggablePlayPauseButton from "@/components/DraggablePlayPauseButton";
 
 const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
     const audioRef = useRef(null);
@@ -39,10 +39,8 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
         }
     }, [audioSrc]);
 
-    // Hijack spacebar and arrow left and right events while audio is playing and metadata is loaded
     useEffect(() => {
-        
-        if (!metadataLoaded || pathname!=="/") return;  // Do not try use keyboard controls until seek data loaded, or when we are not on homepage.
+        if (!metadataLoaded || pathname !== "/") return;
 
         const handleKeyDown = (event) => {
             if (!audioSrc) return;
@@ -66,13 +64,11 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
         };
 
         window.addEventListener("keydown", handleKeyDown);
-
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
+        return () => window.removeEventListener("keydown", handleKeyDown);
     }, [audioSrc, isPlaying, metadataLoaded, pathname]);
 
     const togglePlayPause = () => {
+        console.log()
         if (isPlaying) {
             audioRef.current.pause();
         } else {
@@ -87,9 +83,7 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
         setPlaybackRate(rate);
     };
 
-    const handleTimeUpdate = () => {
-        setCurrentTime(audioRef.current.currentTime);
-    };
+    const handleTimeUpdate = () => setCurrentTime(audioRef.current.currentTime);
 
     const handleSeek = (value) => {
         const time = parseFloat(value[0]);
@@ -111,75 +105,80 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
     const debouncedSeekBy = debounce(seekBy, 50);
 
     return (
-        <div className="relative text-foreground flex flex-col gap-4 items-center justify-center h-[110px]">
-            {/* Background blur used on homepage for immersive effect while scrolling, not really needed elsewhere */}
-            {(currentRoute === "/" || audioSrc) && (
-                <div className="absolute bottom-0 w-full h-full bg-blur-gradient-md"></div>
+        <>
+            <audio
+                ref={audioRef}
+                src={audioSrc}
+                onEnded={onEnded}
+                onTimeUpdate={handleTimeUpdate}
+                onLoadedMetadata={handleLoadedMetadata}
+            />
+            {pathname === "/" ? (
+                <div className="relative text-foreground flex flex-col gap-4 items-center justify-center h-[110px] z-10">
+                    <div className="absolute bottom-0 w-full h-full bg-blur-gradient-md"></div>
+                    <div className="w-full z-20">
+                        <AnimatePresence>
+                            {audioSrc && (
+                                <motion.div
+                                    initial={{ y: 100, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: 100, opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="flex flex-col gap-4 w-full px-4 py-4"
+                                >
+                                    <div className="flex items-center justify-between w-full">
+                                        <button
+                                            onClick={togglePlayPause}
+                                            className="text-2xl text-primary text-left w-1/4 sm:w-48 mr-4"
+                                        >
+                                            <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+                                        </button>
+                                        <Select
+                                            onValueChange={handlePlaybackRateChange}
+                                            value={playbackRate.toString()}
+                                        >
+                                            <SelectTrigger className="ml-4 w-1/4 sm:w-48">
+                                                <SelectValue placeholder="Select playback rate" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="0.5">0.5x</SelectItem>
+                                                    <SelectItem value="1">1x</SelectItem>
+                                                    <SelectItem value="1.5">1.5x</SelectItem>
+                                                    <SelectItem value="2">2x</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="w-full flex flex-col gap-2">
+                                        <Slider
+                                            value={[currentTime]}
+                                            onValueChange={handleSeek}
+                                            min={0}
+                                            max={duration}
+                                        />
+                                        <div className="flex justify-between w-full text-sm">
+                                            <span>
+                                                {new Date(currentTime * 1000)
+                                                    .toISOString()
+                                                    .substr(11, 8)}
+                                            </span>
+                                            <span>
+                                                {new Date(duration * 1000)
+                                                    .toISOString()
+                                                    .substr(11, 8)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </div>
+            ) : (
+                audioSrc && <DraggablePlayPauseButton handleSimulaltedClick={togglePlayPause} isPlaying={isPlaying} />
             )}
-
-            <div className="w-full z-20">
-                <audio
-                    ref={audioRef}
-                    src={audioSrc}
-                    onEnded={onEnded}
-                    onTimeUpdate={handleTimeUpdate}
-                    onLoadedMetadata={handleLoadedMetadata}
-                />
-                <AnimatePresence>
-                    {audioSrc && (
-                        <motion.div
-                            initial={{ y: 100, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: 100, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="flex flex-col gap-4 w-full px-4 py-4"
-                        >
-                            <div className="flex items-center justify-between w-full">
-                                <button
-                                    onClick={togglePlayPause}
-                                    className="text-2xl text-primary text-left w-1/4 sm:w-48 mr-4"
-                                >
-                                    <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
-                                </button>
-                                <Select
-                                    onValueChange={(value) => handlePlaybackRateChange(value)}
-                                    value={playbackRate.toString()}
-                                >
-                                    <SelectTrigger className="ml-4 w-1/4 sm:w-48">
-                                        <SelectValue placeholder="Select playback rate" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectItem value="0.5">0.5x</SelectItem>
-                                            <SelectItem value="1">1x</SelectItem>
-                                            <SelectItem value="1.5">1.5x</SelectItem>
-                                            <SelectItem value="2">2x</SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div className="w-full flex flex-col gap-2">
-                                <Slider
-                                    value={[currentTime]}
-                                    onValueChange={handleSeek}
-                                    min={0}
-                                    max={duration}
-                                />
-                                <div className="flex justify-between w-full text-sm">
-                                    <span>
-                                        {new Date(currentTime * 1000).toISOString().substr(11, 8)}
-                                    </span>
-                                    <span>
-                                        {new Date(duration * 1000).toISOString().substr(11, 8)}
-                                    </span>
-                                </div>
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </div>
-        </div>
+        </>
     );
 };
 

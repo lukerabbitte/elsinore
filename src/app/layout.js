@@ -27,11 +27,13 @@ export const AudioContext = createContext();
 
 export default function RootLayout({ children }) {
     const [audioSrc, setAudioSrc] = useState(null);
+    const [currentlyPlayingTitle, setCurrentlyPlayingTitle] = useState(null);
     const [audioEnded, setAudioEnded] = useState(false);
     const pathname = usePathname();
 
     const handleAudioEnded = () => {
         setAudioSrc(null);
+        setCurrentlyPlayingTitle(null);
         setAudioEnded(true);
     };
 
@@ -45,14 +47,14 @@ export default function RootLayout({ children }) {
             <body className={`min-h-screen flex flex-col ${rosario.className}`}>
                 <NextThemesProvider attribute="class" defaultTheme="system">
                     <AudioContext.Provider
-                        value={{ audioSrc, setAudioSrc, audioEnded, setAudioEnded }}
+                        value={{ audioSrc, setAudioSrc, currentlyPlayingTitle, setCurrentlyPlayingTitle, audioEnded, setAudioEnded }}
                     >
-                        <div className="absolute top-0 w-full z-10">
+                        <div className="absolute top-0 w-full">
                             <Navbar />
                         </div>
                         <div className="flex flex-col lg:flex-row relative">
                             <main className="flex-grow">{children}</main>
-                            <div className="fixed bottom-0 left-0 right-0 z-10">
+                            <div className="fixed bottom-0 left-0 right-0">
                                 <AudioPlayer audioSrc={audioSrc} onEnded={handleAudioEnded} currentRoute={pathname} />
                             </div>
                         </div>

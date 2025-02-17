@@ -13,12 +13,15 @@ const HighlightCard = ({
     isFocused,
 }) => {
     const { audioSrc, setAudioSrc } = useContext(AudioContext);
+    const { setCurrentlyPlayingTitle } = useContext(AudioContext);
     const togglePlaybackButtonRef = useRef(null);
 
     const handleListenClick = () => {
         if (audioSrc === highlight.mp3_url) {
             setAudioSrc(null); // Stop the audio if it's already playing
+            setCurrentlyPlayingTitle(null);
         } else {
+            setCurrentlyPlayingTitle(highlight.title);
             setAudioSrc(highlight.mp3_url); // Play the selected audio
         }
     };

@@ -95,7 +95,7 @@ const HighlightForm = () => {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 bg-gradient-radial p-4 w-full h-full overflow-y-scroll max-w-prose rounded-xl"
+                className="space-y-8 bg-gradient-radial p-4 w-full max-w-prose rounded-xl"
             >
                 <FormField
                     control={form.control}
