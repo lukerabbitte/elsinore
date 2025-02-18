@@ -32,7 +32,7 @@ const Navbar = () => {
 
     return (
         <div className="relative h-[48px]">
-            <div className="absolute top-0 w-full h-[48px] bg-blur-gradient-to-top-md pointer-events-none"></div>
+            <div className="absolute top-0 w-full h-[48px] bg-blur-gradient-to-top-md pointer-events-none z-10"></div>
             <div className="w-full h-full flex flex-row justify-between items-center p-4 pointer-events-auto">
                 <div className="space-x-2 z-30">
                     <TooltipProvider>

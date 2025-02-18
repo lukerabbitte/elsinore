@@ -6,7 +6,7 @@ import { saveAudio } from "@/lib/audioStorage";
 export const createHighlight = async (values) => {
     const { title, content, fullTextUrl, wikipediaUrl, voiceId } = values;
 
-    const userId = "43725733-9ce0-4e44-b527-27764e673a97"; // TODO remove, obvs this is silly
+    const userId = "d4e9ae26-a3de-4477-8f07-f9ed9c113745"; // TODO remove, obvs this is silly
 
     try {
         // Validate mandatory inputs

@@ -48,12 +48,6 @@ const formSchema = z.object({
     fullTextUrl: z.string().url({
         message: "Must be a valid URL.",
     }),
-    wikipediaUrl: z
-        .string()
-        .url({
-            message: "Must be a valid URL.",
-        })
-        .optional(),
     voiceId: z.string().nonempty({
         message: "Voice ID is required.",
     }),
@@ -66,7 +60,6 @@ const HighlightForm = () => {
             title: "",
             content: "",
             fullTextUrl: "",
-            wikipediaUrl: "",
             voiceId: "",
         },
     });
@@ -230,27 +223,6 @@ const HighlightForm = () => {
                         </FormItem>
                     )}
                 />
-                {/* <FormField
-                    control={form.control}
-                    name="wikipediaUrl"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Wikipedia URL (Optional)</FormLabel>
-                            <FormControl>
-                                <Input
-                                    className="border-input bg-formfield"
-                                    placeholder="Wikipedia URL..."
-                                    {...field}
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                        handleInteraction("wikipediaUrl");
-                                    }}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                /> */}
                 <FormField
                     control={form.control}
                     name="voiceId"
