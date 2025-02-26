@@ -12,12 +12,12 @@ import Head from "next/head";
 import { Toaster } from "@/components/ui/toaster";
 import { usePathname } from "next/navigation";
 import { config, library } from "@fortawesome/fontawesome-svg-core";
-import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faPlus, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
 // Add icons to the library
-library.add(faHome, faPlus);
+library.add(faHome, faPlus, faQuestion);
 
 const rosario = Rosario({
     subsets: ["latin"],

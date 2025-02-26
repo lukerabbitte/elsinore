@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { Switch } from "@/components/ui/switch";
+import KeyboardShortcutList from "@/components/KeyboardShortcutList";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faPlus, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Navbar = () => {
@@ -79,6 +80,20 @@ const Navbar = () => {
                             </div>
                         </Tooltip>
                     </TooltipProvider>
+                    <div className="hidden lg:inline-block">
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <div className="w-9 h-8 flex items-center justify-center text-primary hover:text-input transition-transform duration-300 hover:scale-90">
+                                        <FontAwesomeIcon icon={faQuestion} />
+                                    </div>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <KeyboardShortcutList />
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
                 </div>
                 <div className="z-30">
                     <Switch
