@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
@@ -16,9 +16,13 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { debounce } from "@/lib/utils";
 import DraggablePlayPauseButton from "@/components/DraggablePlayPauseButton";
+import { AudioContext } from "@/components/AudioContextProvider";
 
-const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
+const AudioPlayer = () => {
+    const { audioSrc, onEnded } = useContext(AudioContext);
+
     const audioRef = useRef(null);
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [playbackRate, setPlaybackRate] = useState(1);
     const [currentTime, setCurrentTime] = useState(0);
@@ -68,7 +72,7 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
     }, [audioSrc, isPlaying, metadataLoaded, pathname]);
 
     const togglePlayPause = () => {
-        console.log()
+        console.log();
         if (isPlaying) {
             audioRef.current.pause();
         } else {
@@ -176,7 +180,10 @@ const AudioPlayer = ({ audioSrc, onEnded, currentRoute }) => {
                     </div>
                 </div>
             ) : (
-                <DraggablePlayPauseButton handleSimulaltedClick={togglePlayPause} isPlaying={isPlaying} audioSrc={audioSrc} />
+                <DraggablePlayPauseButton
+                    handleSimulaltedClick={togglePlayPause}
+                    isPlaying={isPlaying}
+                />
             )}
         </>
     );

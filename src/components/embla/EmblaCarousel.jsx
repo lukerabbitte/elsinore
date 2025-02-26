@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useContext } from "react";
-import { AudioContext } from "@/app/layout";
+import { AudioContext } from "@/components/AudioContextProvider";
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
 import { PrevButton, NextButton, usePrevNextButtons } from "./EmblaCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";

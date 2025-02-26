@@ -1,23 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Switch } from "@/components/ui/switch";
 import KeyboardShortcutList from "@/components/KeyboardShortcutList";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPlus, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const Navbar = () => {
-    const { theme, setTheme } = useTheme();
     const [activePage, setActivePage] = useState(null);
+    const [isMounted, setIsMounted] = useState(false);
     const pathname = usePathname();
-
-    const toggleTheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
-    };
 
     useEffect(() => {
         if (pathname === "/") {
@@ -26,6 +21,10 @@ const Navbar = () => {
             setActivePage("edit");
         }
     }, [pathname]);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, [])
 
     const handleNavClick = (page) => {
         setActivePage(page);
@@ -96,11 +95,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="z-30">
-                    <Switch
-                        checked={theme === "dark"}
-                        onCheckedChange={toggleTheme}
-                        className={"transition-colors duration-500"}
-                    />
+                    <ThemeToggle isMounted={isMounted}/>
                 </div>
             </div>
         </div>

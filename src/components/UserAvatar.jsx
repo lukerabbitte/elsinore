@@ -7,7 +7,7 @@ const UserAvatar = ({ avatarImage, displayName }) => {
         <div className="flex flex-row items-center gap-2">
             <Avatar>
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.2 }}
+                    initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3 }}
                 >

@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useRef, useEffect } from "react";
 import UserAvatar from "@/components/UserAvatar";
-import { AudioContext } from "@/app/layout";
+import { AudioContext } from "@/components/AudioContextProvider";
 import { PrevButton, NextButton } from "@/components/embla/EmblaCarouselArrowButtons";
 import { Button } from "@/components/ui/button";
 
