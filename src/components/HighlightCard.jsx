@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useRef, useEffect } from "react";
 import UserAvatar from "@/components/UserAvatar";
-import { AudioContext } from "@/components/AudioContextProvider";
+import { useAudioContext } from "@/components/AudioContextProvider";
 import { PrevButton, NextButton } from "@/components/embla/EmblaCarouselArrowButtons";
 import { Button } from "@/components/ui/button";
 
@@ -13,8 +13,7 @@ const HighlightCard = ({
     nextBtnDisabled,
     isFocused,
 }) => {
-    const { audioSrc, setAudioSrc } = useContext(AudioContext);
-    const { setCurrentlyPlayingTitle } = useContext(AudioContext);
+    const { audioSrc, setAudioSrc, setCurrentlyPlayingTitle } = useAudioContext();
     const togglePlaybackButtonRef = useRef(null);
 
     const handleListenClick = () => {
@@ -65,7 +64,7 @@ const HighlightCard = ({
             </div>
 
             <p className="line-clamp-6 max-w-full">{highlight.content}</p>
-            
+
             <div className="flex flex-row gap-2 items-center justify-center">
                 <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
 

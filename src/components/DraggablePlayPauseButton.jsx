@@ -2,11 +2,11 @@ import Draggable from "react-draggable";
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause, faGripVertical, faG } from "@fortawesome/free-solid-svg-icons";
-import { AudioContext } from "@/components/AudioContextProvider";
+import { useAudioContext } from "@/components/AudioContextProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
 const DraggablePlayPauseButton = ({ handleSimulaltedClick, isPlaying }) => {
-    const { currentlyPlayingTitle, audioSrc } = useContext(AudioContext);
+    const { currentlyPlayingTitle, audioSrc } = useAudioContext();
 
     const [dragInfo, setDragInfo] = useState(null);
 

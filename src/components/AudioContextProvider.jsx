@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, createContext } from "react";
+import { useState, createContext, useContext } from "react";
 
 export const AudioContext = createContext();
 
-const AudioContextProvider = ({ children }) => {
+export const AudioContextProvider = ({ children }) => {
     const [audioSrc, setAudioSrc] = useState(null);
     const [currentlyPlayingTitle, setCurrentlyPlayingTitle] = useState(null);
     const [audioEnded, setAudioEnded] = useState(false);
@@ -32,4 +32,6 @@ const AudioContextProvider = ({ children }) => {
     );
 };
 
-export default AudioContextProvider;
+export const useAudioContext = () => {
+    return useContext(AudioContext);
+}

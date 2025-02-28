@@ -1,13 +1,14 @@
 "use client";
 
-import React, { useEffect, useContext } from "react";
-import { AudioContext } from "@/components/AudioContextProvider";
+import React, { useEffect, useContext, useState, useCallback } from "react";
+import { useAudioContext } from "@/components/AudioContextProvider";
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
 import { PrevButton, NextButton, usePrevNextButtons } from "./EmblaCarouselArrowButtons";
 import useEmblaCarousel from "embla-carousel-react";
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures";
 import HighlightCard from "@/components/HighlightCard";
 import "./embla.css";
+import { useCarouselSlideIndexContext } from "@/components/CarouselSlideIndexContextProvider";
 
 const EmblaCarousel = (props) => {
     const {
@@ -17,15 +18,42 @@ const EmblaCarousel = (props) => {
         setCurrentlyPlayingTitle,
         audioEnded,
         setAudioEnded,
-    } = useContext(AudioContext);
+    } = useAudioContext();
+
+    // Last slide context to let us navigate away from carousel route and re-assume scroll position when we go back
+    const { carouselSlideIndex, setCarouselSlideIndex } = useCarouselSlideIndexContext();
 
     const { highlights, options } = props;
+
     const [emblaRef, emblaApi] = useEmblaCarousel(options, [WheelGesturesPlugin()]);
+    const { selectedIndex } = useDotButton(emblaApi);
 
     const { prevBtnDisabled, nextBtnDisabled, onPrevButtonClick, onNextButtonClick } =
         usePrevNextButtons(emblaApi);
 
-    const { selectedIndex } = useDotButton(emblaApi);
+    // Effect which sets up event listeners
+    useEffect(() => {
+        if (emblaApi) {
+            const onSelect = () => {
+                const currentIndex = emblaApi.selectedScrollSnap();
+                setCarouselSlideIndex(currentIndex);
+            };
+
+            emblaApi.on("select", onSelect);
+
+            // Call handler immediately to set the initial index
+            onSelect();
+
+            return () => emblaApi.off("select", onSelect);
+        }
+    }, [emblaApi, setCarouselSlideIndex]);
+
+    // Effect which scrolls to last saved index upon page mount
+    useEffect(() => {
+        if (emblaApi && carouselSlideIndex) {
+            emblaApi.scrollTo(carouselSlideIndex, true);
+        }
+    }, [emblaApi]);
 
     useEffect(() => {
         if (audioEnded) {

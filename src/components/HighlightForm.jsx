@@ -24,7 +24,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import UserAvatar from "@/components/UserAvatar";
-import { createHighlight } from "@/lib/highlights";
+import { createHighlight } from "@/lib/actions/createHighlight";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 

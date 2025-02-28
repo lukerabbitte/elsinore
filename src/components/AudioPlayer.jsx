@@ -16,10 +16,10 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { debounce } from "@/lib/utils";
 import DraggablePlayPauseButton from "@/components/DraggablePlayPauseButton";
-import { AudioContext } from "@/components/AudioContextProvider";
+import { useAudioContext } from "@/components/AudioContextProvider";
 
 const AudioPlayer = () => {
-    const { audioSrc, onEnded } = useContext(AudioContext);
+    const { audioSrc, handleAudioEnded } = useAudioContext();
 
     const audioRef = useRef(null);
 
@@ -109,11 +109,11 @@ const AudioPlayer = () => {
     const debouncedSeekBy = debounce(seekBy, 50);
 
     return (
-        <>
+        <div>
             <audio
                 ref={audioRef}
                 src={audioSrc}
-                onEnded={onEnded}
+                onEnded={handleAudioEnded}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
             />
@@ -185,7 +185,7 @@ const AudioPlayer = () => {
                     isPlaying={isPlaying}
                 />
             )}
-        </>
+        </div>
     );
 };
 
