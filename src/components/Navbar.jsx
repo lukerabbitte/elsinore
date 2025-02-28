@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import KeyboardShortcutList from "@/components/KeyboardShortcutList";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPlus, faQuestion } from "@fortawesome/free-solid-svg-icons";
