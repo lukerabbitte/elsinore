@@ -16,7 +16,7 @@ body {
     :root {
         --background: #e8ecf7;
         --foreground: #1a1a1a;
-        --muted-background: #afabab;
+        --muted-background: #d8dbe4;
         --muted-foreground: #4f4c4c;
         --card: #d9ead9;
         --card-foreground: #2d2d2d;
@@ -73,7 +73,7 @@ body {
     .dark {
         --background: #13131b;
         --foreground: #f5f5f5;
-        --muted-background: #4f4c4c;
+        --muted-background: #1d1d24;
         --muted-foreground: #afabab;
         --card: #28242b;
         --card-foreground: #f2dddd;
