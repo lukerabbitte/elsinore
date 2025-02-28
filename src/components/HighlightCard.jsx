@@ -20,6 +20,7 @@ const HighlightCard = ({
     const togglePlaybackButtonRef = useRef(null);
 
     const handleListenClick = (e) => {
+        e.stopPropagation();
         e.preventDefault();
 
         if (audioSrc === highlight.mp3_url) {
@@ -32,11 +33,13 @@ const HighlightCard = ({
     };
 
     const handlePrevClick = (e) => {
+        e.stopPropagation();
         e.preventDefault();
         onPrevButtonClick(e);
     };
 
     const handleNextClick = (e) => {
+        e.stopPropagation();
         e.preventDefault();
         onNextButtonClick(e);
     };
