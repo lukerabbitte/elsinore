@@ -1,10 +1,11 @@
 import HighlightForm from "@/components/HighlightForm";
+import FloatingAudioPlayerPageLayout from "@/components/layouts/FloatingAudioPlayerPageLayout";
 
 const Edit = () => {
     return (
-        <div className="mt-[48px] p-4 w-full h-full flex flex-col items-center justify-start">
+        <FloatingAudioPlayerPageLayout>
             <HighlightForm />
-        </div>
+        </FloatingAudioPlayerPageLayout>
     );
 };
 

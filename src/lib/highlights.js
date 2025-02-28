@@ -77,7 +77,12 @@ export const getHighlightBySlug = async (highlightSlug) => {
     try {
         const { data, error } = await supabase
             .from("highlight")
-            .select("*")
+            .select(
+                `*, profile:profile (
+                    avatar_image,
+                    display_name
+                )`
+            )
             .eq("slug", highlightSlug)
             .single();
 

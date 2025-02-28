@@ -1,7 +1,7 @@
 import Draggable from "react-draggable";
 import { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faGripVertical, faG } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPause, faGripVertical } from "@fortawesome/free-solid-svg-icons";
 import { useAudioContext } from "@/components/AudioContextProvider";
 import { motion, AnimatePresence } from "framer-motion";
 
