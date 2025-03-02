@@ -1,10 +1,11 @@
 "use client";
-import React, { useContext, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import UserAvatar from "@/components/UserAvatar";
 import { useAudioContext } from "@/components/AudioContextProvider";
 import { PrevButton, NextButton } from "@/components/embla/EmblaCarouselArrowButtons";
 import { Button } from "@/components/ui/button";
 import { Link } from "next-view-transitions";
+import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,6 +19,7 @@ const HighlightCard = ({
 }) => {
     const { audioSrc, setAudioSrc, setCurrentlyPlayingTitle } = useAudioContext();
     const togglePlaybackButtonRef = useRef(null);
+    const [showArrow, setShowArrow] = useState(false);
 
     const handleListenClick = (e) => {
         e.stopPropagation();
@@ -78,11 +80,32 @@ const HighlightCard = ({
             >
                 <div className="flex flex-row items-center justify-between w-full gap-4">
                     <h1
-                        className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance hover:underline"
+                        className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance"
                         style={{ viewTransitionName: `highlight-title-${highlight.id}` }}
+                        onMouseEnter={() => setShowArrow(true)}
+                        onMouseLeave={() => setShowArrow(false)}
                     >
                         {highlight.title}
+                        <span className="inline-block text-sm w-8 h-4">
+                            {showArrow ? (
+                                <motion.div
+                                    initial={{ x: 0, opacity: 0 }}
+                                    animate={{ x: 8, opacity: 1 }}
+                                    exit={{ x: 8, opacity: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <div className="-translate-y-[0.15rem]">
+                                        <FontAwesomeIcon icon={faArrowRight} />
+                                    </div>
+                                </motion.div>
+                            ) : (
+                                <div className="invisible">
+                                    <FontAwesomeIcon icon={faArrowRight} />
+                                </div>
+                            )}
+                        </span>
                     </h1>
+
                     <div>
                         <UserAvatar
                             avatarImage={highlight.profile?.avatar_image}
