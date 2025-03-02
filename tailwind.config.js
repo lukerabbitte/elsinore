@@ -58,13 +58,15 @@ module.exports = {
                 "3xl": "1920px",
             },
             height: {
-                "screen-minus-padding-and-navbar": "calc(100vh - 3rem - 3rem)",
-                "screen-minus-padding-and-navbar-and-footer": "calc(100vh - 3rem - 6rem)",
+                "screen-minus-navbar": "calc(100vh - 48px)",
                 "screen-minus-audio-player": "calc(100vh - 110px)",
                 "screen-minus-audio-player-and-navbar": "calc(100vh - 110px - 48px)",
             },
             maxHeight: {
                 144: "36rem",
+            },
+            minHeight: {
+                "screen-minus-navbar": "calc(100vh - 48px)",
             },
         },
     },

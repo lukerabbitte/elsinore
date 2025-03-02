@@ -24,14 +24,14 @@ const Navbar = () => {
 
     useEffect(() => {
         setIsMounted(true);
-    }, [])
+    }, []);
 
     const handleNavClick = (page) => {
         setActivePage(page);
     };
 
     return (
-        <div className="relative h-[48px]">
+        <div className="fixed w-full top-0 left-0 right-0 h-[48px] z-50">
             <div className="absolute top-0 w-full h-[48px] bg-blur-gradient-to-top-md pointer-events-none z-10"></div>
             <div className="w-full h-full flex flex-row justify-between items-center p-4 pointer-events-auto">
                 <div className="space-x-2 z-30">
@@ -79,23 +79,25 @@ const Navbar = () => {
                             </div>
                         </Tooltip>
                     </TooltipProvider>
-                    <div className="hidden lg:inline-block">
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger>
-                                    <div className="w-9 h-8 flex items-center justify-center text-primary hover:text-input transition-transform duration-300 hover:scale-90">
-                                        <FontAwesomeIcon icon={faQuestion} />
-                                    </div>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <KeyboardShortcutList />
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    </div>
+                    {pathname === "/" && (
+                        <div className="hidden lg:inline-block">
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger>
+                                        <div className="w-9 h-8 flex items-center justify-center text-primary hover:text-input transition-transform duration-300 hover:scale-90">
+                                            <FontAwesomeIcon icon={faQuestion} />
+                                        </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                        <KeyboardShortcutList />
+                                    </TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        </div>
+                    )}
                 </div>
                 <div className="z-30">
-                    <ThemeToggle isMounted={isMounted}/>
+                    <ThemeToggle isMounted={isMounted} />
                 </div>
             </div>
         </div>

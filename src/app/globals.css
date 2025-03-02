@@ -51,6 +51,16 @@ body {
             );
         }
 
+        .bg-gradient-radial-reverse {
+            background: radial-gradient(
+                circle at 50% 15%,
+                var(--gradient-end-light) 10%,
+                var(--gradient-mid2-light) 40%,
+                var(--gradient-mid-light) 70%,
+                var(--gradient-start-light) 100%
+            );
+        }
+
         .bg-blur-gradient-md {
             backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
@@ -105,6 +115,16 @@ body {
                 var(--gradient-mid) 40%,
                 var(--gradient-mid2) 70%,
                 var(--gradient-end) 100%
+            );
+        }
+
+        .bg-gradient-radial-reverse {
+            background: radial-gradient(
+                circle at 50% 15%,
+                var(--gradient-end) 10%,
+                var(--gradient-mid2) 40%,
+                var(--gradient-mid) 70%,
+                var(--gradient-start) 100%
             );
         }
     }
