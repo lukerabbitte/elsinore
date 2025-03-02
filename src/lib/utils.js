@@ -20,5 +20,11 @@ export const debounce = (func, delay) => {
     return (...args) => {
         clearTimeout(timer);
         timer = setTimeout(() => func(...args), delay);
-    }
+    };
+};
+
+export const isPageWithShortcutsAllowed = (pathname) => {
+    if (pathname === "/" || pathname.startsWith("/highlight/")) return true;
+
+    return false;
 };

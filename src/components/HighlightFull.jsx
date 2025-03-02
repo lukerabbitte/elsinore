@@ -44,28 +44,17 @@ const HighlightFull = ({ highlight }) => {
     }, [audioSrc]);
 
     return (
-        <div
-            className="bg-gradient-radial max-w-prose lg:w-auto rounded-xl p-4 flex flex-row justify-center"
-            style={{ viewTransitionName: `highlight-background-${highlight.id}` }}
-        >
+        <div className="bg-gradient-radial max-w-prose lg:w-auto rounded-xl p-4 flex flex-row justify-center">
             <div className="max-w-prose flex flex-col gap-8 items-center">
                 <div className="flex flex-col gap-2 w-full">
                     <div className="flex flex-row items-center justify-between w-full gap-4">
-                        <h1
-                            className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance"
-                            style={{
-                                viewTransitionName: `highlight-title-${highlight.id}`,
-                            }}
-                        >
+                        <h1 className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance">
                             {highlight.title}
                         </h1>
                         <div>
                             <UserAvatar
                                 avatarImage={highlight.profile?.avatar_image}
                                 displayName={highlight.profile?.display_name}
-                                style={{
-                                    viewTransitionName: `highlight-avatar-${highlight.id}`,
-                                }}
                             />
                         </div>
                     </div>
@@ -83,12 +72,7 @@ const HighlightFull = ({ highlight }) => {
                     )}
                 </div>
 
-                <p
-                    className="max-w-full"
-                    style={{ viewTransitionName: `highlight-content-${highlight.id}` }}
-                >
-                    {highlight.content}
-                </p>
+                <p className="max-w-full">{highlight.content}</p>
 
                 {highlight.mp3_url && (
                     <div className="flex flex-col gap-2 items-center justify-center">
@@ -96,9 +80,6 @@ const HighlightFull = ({ highlight }) => {
                             ref={togglePlaybackButtonRef}
                             onClick={handleListenClick}
                             className="bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 rounded hover:scale-105 transition-all duration-300"
-                            style={{
-                                viewTransitionName: `highlight-listen-${highlight.id}`,
-                            }}
                         >
                             {audioSrc === highlight.mp3_url ? "Stop" : "Listen"}
                         </Button>

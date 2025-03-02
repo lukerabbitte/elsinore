@@ -17,6 +17,7 @@ import { Slider } from "@/components/ui/slider";
 import { debounce } from "@/lib/utils";
 import DraggablePlayPauseButton from "@/components/DraggablePlayPauseButton";
 import { useAudioContext } from "@/components/AudioContextProvider";
+import { isPageWithShortcutsAllowed } from "@/lib/utils";
 
 const AudioPlayer = () => {
     const { audioSrc, handleAudioEnded } = useAudioContext();
@@ -44,7 +45,7 @@ const AudioPlayer = () => {
     }, [audioSrc]);
 
     useEffect(() => {
-        if (!metadataLoaded || pathname !== "/") return;
+        if (!metadataLoaded || !isPageWithShortcutsAllowed(pathname)) return;
 
         const handleKeyDown = (event) => {
             if (!audioSrc) return;
@@ -101,7 +102,8 @@ const AudioPlayer = () => {
 
     const seekBy = (seconds) => {
         const newTime = Math.max(0, Math.min(duration, audioRef.current.currentTime + seconds));
-        handleSeek(newTime);
+        audioRef.current.currentTime = newTime;
+        setCurrentTime(newTime);
     };
 
     const debouncedSeekBy = debounce(seekBy, 50);
