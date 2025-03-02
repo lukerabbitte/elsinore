@@ -132,7 +132,7 @@ const HighlightForm = () => {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 bg-gradient-radial p-4 w-full max-w-prose rounded-xl"
+                className="space-y-8 bg-gradient-radial p-4 w-full max-w-prose rounded-xl z-10"
             >
                 <FormField
                     control={form.control}
@@ -258,6 +258,10 @@ const HighlightForm = () => {
                         className="rounded-md bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 hover:scale-105 transition-all duration-300"
                         type="submit"
                         disabled={loading}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }}
                     >
                         {loading ? "Loading..." : "Submit"}
                     </Button>

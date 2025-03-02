@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useRef, useEffect, useContext } from "react";
@@ -73,13 +72,17 @@ const AudioPlayer = () => {
     }, [audioSrc, isPlaying, metadataLoaded, pathname]);
 
     const togglePlayPause = () => {
-        console.log();
         if (isPlaying) {
             audioRef.current.pause();
         } else {
             audioRef.current.play();
         }
         setIsPlaying(!isPlaying);
+    };
+
+    const handleLoadedMetadata = () => {
+        setDuration(audioRef.current.duration);
+        setMetadataLoaded(true);
     };
 
     const handlePlaybackRateChange = (value) => {
@@ -96,15 +99,9 @@ const AudioPlayer = () => {
         setCurrentTime(time);
     };
 
-    const handleLoadedMetadata = () => {
-        setDuration(audioRef.current.duration);
-        setMetadataLoaded(true);
-    };
-
     const seekBy = (seconds) => {
         const newTime = Math.max(0, Math.min(duration, audioRef.current.currentTime + seconds));
-        audioRef.current.currentTime = newTime;
-        setCurrentTime(newTime);
+        handleSeek(newTime);
     };
 
     const debouncedSeekBy = debounce(seekBy, 50);
@@ -117,6 +114,7 @@ const AudioPlayer = () => {
                 onEnded={handleAudioEnded}
                 onTimeUpdate={handleTimeUpdate}
                 onLoadedMetadata={handleLoadedMetadata}
+                className="hidden"
             />
             {pathname === "/" ? (
                 <div className="relative text-foreground flex flex-col gap-4 items-center justify-center h-[110px] z-10">
@@ -164,14 +162,19 @@ const AudioPlayer = () => {
                                         />
                                         <div className="flex justify-between w-full text-sm">
                                             <span>
-                                                {new Date(currentTime * 1000)
-                                                    .toISOString()
-                                                    .substr(11, 8)}
+                                                {new Date(currentTime * 1000).toLocaleTimeString(
+                                                    [],
+                                                    {
+                                                        minute: "2-digit",
+                                                        second: "2-digit",
+                                                    }
+                                                )}
                                             </span>
                                             <span>
-                                                {new Date(duration * 1000)
-                                                    .toISOString()
-                                                    .substr(11, 8)}
+                                                {new Date(duration * 1000).toLocaleTimeString([], {
+                                                    minute: "2-digit",
+                                                    second: "2-digit",
+                                                })}
                                             </span>
                                         </div>
                                     </div>
@@ -182,8 +185,11 @@ const AudioPlayer = () => {
                 </div>
             ) : (
                 <DraggablePlayPauseButton
-                    handleSimulaltedClick={togglePlayPause}
+                    handleSimulatedClick={togglePlayPause}
                     isPlaying={isPlaying}
+                    currentTime={currentTime}
+                    duration={duration}
+                    handleSeek={handleSeek}
                 />
             )}
         </div>

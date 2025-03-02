@@ -72,16 +72,16 @@ const HighlightCard = ({
             href={`/highlight/${highlight.slug}`}
             className="transition-all duration-300 hover:scale-[0.99]"
         >
-            <div className="bg-gradient-radial rounded-xl min-w-60 max-w-prose max-h-144 mx-4 sm:mx-0 p-4 flex flex-col gap-8 justify-between items-center focus:outline-none">
+            <div
+                className="bg-gradient-radial rounded-xl min-w-60 max-w-prose max-h-144 mx-4 sm:mx-0 p-4 flex flex-col gap-8 justify-between items-center focus:outline-none"
+                style={{ viewTransitionName: `highlight-background-${highlight.id}` }}
+            >
                 <div className="flex flex-row items-center justify-between w-full gap-4">
                     <h1
                         className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance hover:underline"
                         style={{ viewTransitionName: `highlight-title-${highlight.id}` }}
                     >
                         {highlight.title}
-                        <span className="mx-2">
-                            <FontAwesomeIcon icon={faArrowRight} />
-                        </span>
                     </h1>
                     <div>
                         <UserAvatar
@@ -102,16 +102,18 @@ const HighlightCard = ({
                 <div className="flex flex-row gap-2 items-center justify-center">
                     <PrevButton onClick={handlePrevClick} disabled={prevBtnDisabled} />
 
-                    <Button
-                        ref={togglePlaybackButtonRef}
-                        onClick={handleListenClick}
-                        className="bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 rounded hover:scale-105 transition-all duration-300"
-                        style={{
-                            viewTransitionName: `highlight-listen-${highlight.id}`,
-                        }}
-                    >
-                        {audioSrc === highlight.mp3_url ? "Stop" : "Listen"}
-                    </Button>
+                    {highlight.mp3_url && (
+                        <Button
+                            ref={togglePlaybackButtonRef}
+                            onClick={handleListenClick}
+                            className="bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 rounded hover:scale-105 transition-all duration-300"
+                            style={{
+                                viewTransitionName: `highlight-listen-${highlight.id}`,
+                            }}
+                        >
+                            {audioSrc === highlight.mp3_url ? "Stop" : "Listen"}
+                        </Button>
+                    )}
 
                     <NextButton onClick={handleNextClick} disabled={nextBtnDisabled} />
                 </div>

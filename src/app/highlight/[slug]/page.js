@@ -1,4 +1,4 @@
-import FloatingAudioPlayerPageLayout from "@/components/layouts/FloatingAudioPlayerPageLayout";
+import FullAudioPlayerPageLayout from "@/components/layouts/FullAudioPlayerPageLayout";
 import HighlightFull from "@/components/HighlightFull";
 import { getHighlightBySlug } from "@/lib/highlights";
 
@@ -8,9 +8,11 @@ const HighlightPage = async ({ params }) => {
     const highlight = await getHighlightBySlug(slug);
 
     return (
-        <FloatingAudioPlayerPageLayout>
-            <HighlightFull highlight={highlight} />
-        </FloatingAudioPlayerPageLayout>
+        <FullAudioPlayerPageLayout>
+            <div className="flex flex-col items-center justify-start w-full">
+                <HighlightFull highlight={highlight} />
+            </div>
+        </FullAudioPlayerPageLayout>
     );
 };
 
