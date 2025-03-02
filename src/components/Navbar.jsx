@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faPlus, faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import ThemeToggle from "@/components/ThemeToggle";
+import { isPageWithShortcutsAllowed } from "@/lib/utils";
 
 const Navbar = () => {
     const [activePage, setActivePage] = useState(null);
@@ -79,7 +80,10 @@ const Navbar = () => {
                             </div>
                         </Tooltip>
                     </TooltipProvider>
-                    {pathname === "/" && (
+                </div>
+                <div className="z-30 flex flex-row items-center justify-center">
+                    <ThemeToggle isMounted={isMounted} />
+                    {isPageWithShortcutsAllowed(pathname) && (
                         <div className="hidden lg:inline-block">
                             <TooltipProvider>
                                 <Tooltip>
@@ -95,9 +99,6 @@ const Navbar = () => {
                             </TooltipProvider>
                         </div>
                     )}
-                </div>
-                <div className="z-30">
-                    <ThemeToggle isMounted={isMounted} />
                 </div>
             </div>
         </div>
