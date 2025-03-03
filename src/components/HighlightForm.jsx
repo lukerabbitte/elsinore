@@ -48,9 +48,7 @@ const formSchema = z.object({
     fullTextUrl: z.string().url({
         message: "Must be a valid URL.",
     }),
-    voiceId: z.string().nonempty({
-        message: "Voice ID is required.",
-    }),
+    voiceId: z.string().optional(),
 });
 
 const HighlightForm = () => {
@@ -228,9 +226,13 @@ const HighlightForm = () => {
                     name="voiceId"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>ElevenLabs Voice</FormLabel>
+                            <FormLabel>ElevenLabs Voice (Optional)</FormLabel>
                             <FormControl>
-                                <Select onValueChange={field.onChange} value={field.value}>
+                                <Select
+                                    onValueChange={field.onChange}
+                                    value={field.value || ""}
+                                    defaultValue=""
+                                >
                                     <SelectTrigger className="bg-formfield border-input">
                                         <SelectValue placeholder="Select a voice..." />
                                     </SelectTrigger>
@@ -258,10 +260,6 @@ const HighlightForm = () => {
                         className="rounded-md bg-slate-500/20 backdrop-blur-sm text-foreground px-4 py-2 h-12 w-20 hover:scale-105 transition-all duration-300"
                         type="submit"
                         disabled={loading}
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            e.preventDefault();
-                        }}
                     >
                         {loading ? "Loading..." : "Submit"}
                     </Button>

@@ -1,10 +1,12 @@
-"use server"
+"use server";
 
 import { supabase } from "@/lib/supabase";
 import { generateSlug } from "@/lib/utils";
 import { generateAudio } from "@/lib/audioGeneration";
 import { saveAudio } from "@/lib/audioStorage";
 import { revalidatePath } from "next/cache";
+import { generateWebpageThumbnail } from "@/lib/webpageThumbnailGeneration";
+import { saveWebpageThumbnail } from "@/lib/webpageThumbnailStorage";
 
 export const createHighlight = async (values) => {
     const { title, content, fullTextUrl, voiceId } = values;
@@ -13,34 +15,72 @@ export const createHighlight = async (values) => {
 
     try {
         // Validate mandatory inputs
-        if (!userId || !title || !content || !voiceId) {
+        if (!userId || !title || !content) {
             throw new Error("Missing required fields: userId, title, content, or voiceId");
         }
 
         // Generate the slug
         const slug = generateSlug(title);
 
-        // Generate the audio blob
-        let audioBlob;
-        try {
-            audioBlob = await generateAudio({ text: content, voiceId });
+        let mp3_url = "";
+        let webpage_thumbnail_url = "";
 
-            // Validate the audio blob
-            if (!audioBlob || audioBlob.size === 0) {
-                throw new Error("Generated audio is empty or invalid");
+        // Generate the audio blob
+        if (voiceId) {
+            let audioBlob;
+            try {
+                audioBlob = await generateAudio({ text: content, voiceId });
+
+                // Validate the audio blob
+                if (!audioBlob || audioBlob.size === 0) {
+                    throw new Error("Generated audio is empty or invalid");
+                }
+            } catch (audioError) {
+                console.error("Audio generation failed:", audioError);
+                throw new Error(`Audio generation failed: ${audioError.message}`);
             }
-        } catch (audioError) {
-            console.error("Audio generation failed:", audioError);
-            throw new Error(`Audio generation failed: ${audioError.message}`);
+
+            // Only proceed to storage if we have valid audio
+            try {
+                mp3_url = await saveAudio({ highlightFilename: slug, audioBlob });
+            } catch (audioStorageError) {
+                console.error("Audio storage save failed:", audioStorageError);
+                throw new Error(`Audio storage save failed: ${audioStorageError.message}`);
+            }
         }
 
-        // Only proceed to storage if we have valid audio
-        let mp3_url;
-        try {
-            mp3_url = await saveAudio({ highlightFilename: slug, audioBlob });
-        } catch (storageError) {
-            console.error("Storage save failed:", storageError);
-            throw new Error(`Storage save failed: ${storageError.message}`);
+        // Generate the webpage preview image blob
+        if (fullTextUrl) {
+            let webpageThumbnailBlob;
+            try {
+                webpageThumbnailBlob = await generateWebpageThumbnail(fullTextUrl);
+
+                // Validate the audio blob
+                if (!webpageThumbnailBlob || webpageThumbnailBlob.size === 0) {
+                    throw new Error("Generated audio is empty or invalid");
+                }
+            } catch (webpageThumbnailError) {
+                console.error("Webpage thumbnail generation failed:", webpageThumbnailError);
+                throw new Error(
+                    `Webpage thumbnail generation failed: ${webpageThumbnailError.message}`
+                );
+            }
+
+            // Only proceed to storage if we have valid audio
+            try {
+                webpage_thumbnail_url = await saveWebpageThumbnail({
+                    webpageThumbnailFilename: fullTextUrl,
+                    webpageThumbnailBlob,
+                });
+            } catch (webpageThumbnailStorageError) {
+                console.error(
+                    "Webpage thumbnail storage save failed:",
+                    webpageThumbnailStorageError
+                );
+                throw new Error(
+                    `Webpage thumbnail storage save failed: ${webpageThumbnailStorageError.message}`
+                );
+            }
         }
 
         // Create the highlight
@@ -50,8 +90,8 @@ export const createHighlight = async (values) => {
             title,
             content,
             full_text_url: fullTextUrl,
-            wikipedia_url: wikipediaUrl,
             mp3_url,
+            webpage_thumbnail_url,
             elevenlabs_voice_id: voiceId,
         };
 

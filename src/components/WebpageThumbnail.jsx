@@ -16,13 +16,13 @@ const WebpageThumbnail = ({ fullTextURL, webpageThumbnailURLSrc, webpageThumbnai
             onMouseLeave={() => setHoveringOnLink(false)}
         >
             {webpageThumbnailURLSrc && (
-                <div className="overflow-hidden h-12 w-20">
+                <div className="h-12 w-20">
                     <Image
                         src={webpageThumbnailURLSrc}
                         alt={webpageThumbnailAltText}
-                        width={80}
-                        height={60}
-                        className="rounded-t-md"
+                        width={120}
+                        height={90}
+                        className="rounded-t-md w-full h-full object-cover"
                     />
                 </div>
             )}
@@ -30,7 +30,7 @@ const WebpageThumbnail = ({ fullTextURL, webpageThumbnailURLSrc, webpageThumbnai
             <Badge
                 variant={`${webpageThumbnailURLSrc ? "noRounding" : "default"}`}
                 className={`text-xs w-full flex flex-row items-center justify-center ${webpageThumbnailURLSrc ? "rounded-b-md" : ""} transition-all duration-300 ${
-                    hoveringOnLink ? "opacity-80" : ""
+                    hoveringOnLink ? "opacity-80" : "" 
                 }`}
             >
                 <p className={`transition-all duration-300 ${hoveringOnLink ? "scale-90" : ""}`}>
