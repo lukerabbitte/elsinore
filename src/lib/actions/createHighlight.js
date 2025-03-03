@@ -69,7 +69,7 @@ export const createHighlight = async (values) => {
             // Only proceed to storage if we have valid audio
             try {
                 webpage_thumbnail_url = await saveWebpageThumbnail({
-                    webpageThumbnailFilename: fullTextUrl,
+                    webpageThumbnailFilename: title,
                     webpageThumbnailBlob,
                 });
             } catch (webpageThumbnailStorageError) {
