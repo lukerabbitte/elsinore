@@ -4,9 +4,7 @@ import UserAvatar from "@/components/UserAvatar";
 import { useAudioContext } from "@/components/AudioContextProvider";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-import { Badge } from "@/components/ui/badge";
+import WebpageThumbnail from "@/components/WebpageThumbnail";
 
 const HighlightFull = ({ highlight }) => {
     const { audioSrc, setAudioSrc, setCurrentlyPlayingTitle } = useAudioContext();
@@ -45,7 +43,7 @@ const HighlightFull = ({ highlight }) => {
 
     return (
         <div className="bg-gradient-radial max-w-prose lg:w-auto rounded-xl p-4 flex flex-row justify-center">
-            <div className="max-w-prose flex flex-col gap-8 items-center">
+            <div className="max-w-prose flex flex-col gap-4 items-center">
                 <div className="flex flex-col gap-2 w-full">
                     <div className="flex flex-row items-center justify-between w-full gap-4">
                         <h1 className="font-semibold lg:font-extrabold text-foreground text-2xl text-balance">
@@ -58,24 +56,12 @@ const HighlightFull = ({ highlight }) => {
                             />
                         </div>
                     </div>
-                    {highlight.full_text_url && (
-                        <a href={highlight.full_text_url} target="_blank">
-                            <Badge className="transition-all duration-300 hover:scale-[98%] hover:opacity-90">
-                                <p>
-                                    Read Source
-                                    <span className="ml-2">
-                                        <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-                                    </span>
-                                </p>
-                            </Badge>
-                        </a>
-                    )}
                 </div>
 
                 <p className="max-w-full">{highlight.content}</p>
 
-                {highlight.mp3_url && (
-                    <div className="flex flex-col gap-2 items-center justify-center">
+                <div className="flex flex-col gap-2 items-center justify-center">
+                    {highlight.mp3_url && (
                         <Button
                             ref={togglePlaybackButtonRef}
                             onClick={handleListenClick}
@@ -83,8 +69,16 @@ const HighlightFull = ({ highlight }) => {
                         >
                             {audioSrc === highlight.mp3_url ? "Stop" : "Listen"}
                         </Button>
-                    </div>
-                )}
+                    )}
+
+                    {highlight.full_text_url && (
+                        <WebpageThumbnail
+                            fullTextURL={highlight.full_text_url}
+                            webpageThumbnailURLSrc={highlight.webpage_thumbnail_url}
+                            webpageThumbnailAltText={highlight.title}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ import { saveAudio } from "@/lib/audioStorage";
 import { revalidatePath } from "next/cache";
 
 export const createHighlight = async (values) => {
-    const { title, content, fullTextUrl, wikipediaUrl, voiceId } = values;
+    const { title, content, fullTextUrl, voiceId } = values;
 
     const userId = "d4e9ae26-a3de-4477-8f07-f9ed9c113745"; // TODO remove, obvs this is silly
 
