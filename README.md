@@ -1,6 +1,6 @@
 # Reading Highlight App
 
-## Overview
+## Intro
 
 This project is a reading highlight application built with Next.js, Supabase, TailwindCSS, ShadCN, and ElevenLabs. The app allows users to save and highlight text from their readings, and it provides narration functionality to listen to the highlighted text. The project aims to enhance the reading experience by integrating various modern web technologies.
 
